@@ -1,5 +1,0 @@
-package br.com.apiposto.repository;
-
-public class MongodbRepository {
-
-}
