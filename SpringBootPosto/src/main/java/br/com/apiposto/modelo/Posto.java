@@ -1,7 +1,6 @@
 package br.com.apiposto.modelo;
 
 
-
 public class Posto {
 
 	private Long id;
