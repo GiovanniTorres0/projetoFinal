@@ -1,10 +1,21 @@
 package br.com.apiposto.modelo;
 
+
 public class Posto {
 
 	private Long id;
 	private String nome;
 	private Gps gps;
+
+	public Posto() {
+
+	}
+
+	public Posto(Long id, String nome, Gps gps) {
+		this.id = id;
+		this.nome = nome;
+		this.gps = gps;
+	}
 
 	public Long getId() {
 		return id;
