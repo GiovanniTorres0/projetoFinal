@@ -1,0 +1,10 @@
+package br.com.apiposto.modelo;
+
+public class Posto {
+
+	private Long id;
+	private String nome;
+	private Gps gps;
+	
+	
+}
