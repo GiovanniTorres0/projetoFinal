@@ -2,7 +2,7 @@ package br.com.apiposto.modelo;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
+@Document(collection = "gps")
 public class Gps {
 
 	private Long latitud;

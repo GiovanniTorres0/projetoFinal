@@ -9,7 +9,7 @@ public interface UsuarioService {
 
 	public List<Usuario> obterTodos();
 	
-	public Usuario obterPorId(Long id);
+	public Usuario obterPorId(String id);
 	
 	public Usuario criar (Usuario usuario);
 	

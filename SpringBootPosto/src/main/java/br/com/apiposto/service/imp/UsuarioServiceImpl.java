@@ -12,23 +12,24 @@ import br.com.apiposto.service.UsuarioService;
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
 
-	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-	
+
 	@Override
 	public List<Usuario> obterTodos() {
 		return this.usuarioRepository.findAll();
 	}
 
 	@Override
-	public Usuario obterPorId(Long id) {
-		return null;
+	public Usuario obterPorId(String id) {
+		return this.usuarioRepository
+				.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Usuario não existe"));
 	}
 
 	@Override
 	public Usuario criar(Usuario usuario) {
-		return null;
+		return this.usuarioRepository.save(usuario);
 	}
 
 }
