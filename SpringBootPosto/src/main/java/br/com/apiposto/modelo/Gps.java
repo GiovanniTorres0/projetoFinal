@@ -1,5 +1,8 @@
 package br.com.apiposto.modelo;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document
 public class Gps {
 
 	private Long latitud;

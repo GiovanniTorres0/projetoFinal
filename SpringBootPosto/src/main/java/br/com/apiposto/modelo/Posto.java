@@ -1,6 +1,7 @@
 package br.com.apiposto.modelo;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
@@ -8,25 +9,26 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Posto {
 
 	@Id
-	private Long id;
+	private String id;
 	private String nome;
+	@DBRef
 	private Gps gps;
 
 	public Posto() {
 
 	}
 
-	public Posto(Long id, String nome, Gps gps) {
+	public Posto(String id, String nome, Gps gps) {
 		this.id = id;
 		this.nome = nome;
 		this.gps = gps;
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
