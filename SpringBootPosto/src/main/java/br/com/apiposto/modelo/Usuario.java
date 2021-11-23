@@ -44,4 +44,7 @@ public class Usuario {
 		this.gps = gps;
 	}
 
+
+	
+
 }

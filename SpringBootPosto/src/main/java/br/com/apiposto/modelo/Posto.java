@@ -18,8 +18,7 @@ public class Posto {
 
 	}
 
-	public Posto(String id, String nome, Gps gps) {
-		this.id = id;
+	public Posto(String nome, Gps gps) {
 		this.nome = nome;
 		this.gps = gps;
 	}
