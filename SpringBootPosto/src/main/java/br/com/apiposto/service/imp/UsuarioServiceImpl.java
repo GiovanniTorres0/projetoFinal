@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import br.com.apiposto.modelo.Ubicacion;
 import br.com.apiposto.modelo.Usuario;
 import br.com.apiposto.repository.UsuarioRepository;
 import br.com.apiposto.service.UsuarioService;
@@ -62,7 +63,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 		if (Optional.isPresent()) {
 			Usuario _usuario = Optional.get();
 			_usuario.setNome(usuario.getNome());
-			_usuario.setGps(usuario.getGps());
+			_usuario.setUbicacion(usuario.getUbicacion());
 			return new ResponseEntity<>(usuarioRepository.save(_usuario), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -82,9 +83,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 
 	@Override
-	public ResponseEntity<Usuario> criarUsuario(@RequestBody Usuario usuario) {
+	public ResponseEntity<Usuario> criarUsuario(@RequestBody Usuario usuario,
+			GeolocalizacaoService geolocalizacaoService) {
 		try {
-			Usuario _usuario = usuarioRepository.save(new Usuario(usuario.getNome(), usuario.getGps()));
+			List<Double> latElong = geolocalizacaoService.obterLateLong(usuario.getUbicacion());
+			usuario.getUbicacion().setCoordenadas(latElong);
+			Usuario _usuario = usuarioRepository.save(new Usuario(usuario.getNome(), usuario.getUbicacion()));
 			return new ResponseEntity<>(_usuario, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

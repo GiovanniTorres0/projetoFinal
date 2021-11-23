@@ -62,7 +62,7 @@ public class PostoServiceImpl implements PostoService {
 		if (Optional.isPresent()) {
 			Posto _posto = Optional.get();
 			_posto.setNome(posto.getNome());
-			_posto.setGps(posto.getGps());
+			_posto.setUbicacion(posto.getUbicacion());
 			return new ResponseEntity<>(postoRepository.save(_posto), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -84,7 +84,7 @@ public class PostoServiceImpl implements PostoService {
 	@Override
 	public ResponseEntity<Posto> criarPosto(@RequestBody Posto posto) {
 		try {
-			Posto _posto = postoRepository.save(new Posto(posto.getNome(), posto.getGps()));
+			Posto _posto = postoRepository.save(new Posto(posto.getNome(), posto.getUbicacion()));
 			return new ResponseEntity<>(_posto, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

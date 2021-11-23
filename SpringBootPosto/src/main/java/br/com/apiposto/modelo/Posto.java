@@ -12,15 +12,15 @@ public class Posto {
 	private String id;
 	private String nome;
 	@DBRef
-	private Gps gps;
+	private Ubicacion ubicacion;
 
 	public Posto() {
 
 	}
 
-	public Posto(String nome, Gps gps) {
+	public Posto(String nome, Ubicacion ubicacion) {
 		this.nome = nome;
-		this.gps = gps;
+		this.ubicacion = ubicacion;
 	}
 
 	public String getId() {
@@ -39,12 +39,12 @@ public class Posto {
 		this.nome = nome;
 	}
 
-	public Gps getGps() {
-		return gps;
+	public Ubicacion getUbicacion() {
+		return ubicacion;
 	}
 
-	public void setGps(Gps gps) {
-		this.gps = gps;
+	public void setUbicacion(Ubicacion ubicacion) {
+		this.ubicacion = ubicacion;
 	}
 
 }

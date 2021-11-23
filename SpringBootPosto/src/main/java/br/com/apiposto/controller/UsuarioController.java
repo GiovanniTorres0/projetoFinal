@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.apiposto.modelo.Usuario;
 import br.com.apiposto.service.UsuarioService;
+import br.com.apiposto.service.imp.GeolocalizacaoService;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -24,6 +25,10 @@ public class UsuarioController {
 
 	@Autowired
 	private UsuarioService usuarioService;
+	
+	@Autowired
+	private GeolocalizacaoService geolocalizacaoService ;
+	
 
 	@GetMapping
 	public ResponseEntity<List<Usuario>> obterTodos(@RequestParam (required = false) String nome) {
@@ -47,7 +52,7 @@ public class UsuarioController {
 	
 	@PostMapping
 	public ResponseEntity<Usuario> criarUsuario (@RequestBody Usuario usuario) {
-		return this.usuarioService.criarUsuario(usuario);
+		return this.usuarioService.criarUsuario(usuario, geolocalizacaoService);
 	}
 	
 	

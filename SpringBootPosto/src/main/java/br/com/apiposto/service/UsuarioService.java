@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import br.com.apiposto.modelo.Usuario;
+import br.com.apiposto.service.imp.GeolocalizacaoService;
 
 public interface UsuarioService {
 
@@ -17,6 +18,6 @@ public interface UsuarioService {
 
 	public ResponseEntity<HttpStatus> deletarUsuario(String id);
 
-	public ResponseEntity<Usuario> criarUsuario(Usuario usuario);
+	public ResponseEntity<Usuario> criarUsuario(Usuario usuario, GeolocalizacaoService geolocalizacaoService);
 
 }
