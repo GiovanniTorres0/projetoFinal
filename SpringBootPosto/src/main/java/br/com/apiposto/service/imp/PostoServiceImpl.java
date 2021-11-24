@@ -84,6 +84,7 @@ public class PostoServiceImpl implements PostoService {
 	@Override
 	public ResponseEntity<Posto> criarPosto(@RequestBody Posto posto) {
 		try {
+			
 			Posto _posto = postoRepository.save(new Posto(posto.getNome(), posto.getUbicacion()));
 			return new ResponseEntity<>(_posto, HttpStatus.CREATED);
 		} catch (Exception e) {

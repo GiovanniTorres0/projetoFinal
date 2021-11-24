@@ -10,4 +10,12 @@ public interface PostoRepository extends MongoRepository<Posto, String> {
 
 	List<Posto> findByNomeContaining(String nome);
 
+	//En analisis
+	List<Posto> busquedaPorGeolocalizacion(Posto posto);
+	Posto findByIdContaining(String id);
+
+	
+	
+
+
 }
