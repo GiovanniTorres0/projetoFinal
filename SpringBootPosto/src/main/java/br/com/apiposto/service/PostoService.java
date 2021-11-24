@@ -1,25 +1,21 @@
 package br.com.apiposto.service;
 
-import java.util.List;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 
 import br.com.apiposto.modelo.Posto;
 
-
 public interface PostoService {
 
-	
-	public ResponseEntity<List<Posto>> obterTodos(String nome);
+	public String cadastrar(Model model);
 
-	public ResponseEntity<Posto> obterPorId(String id);
+	public String salvar(Posto posto);
 
-	public ResponseEntity<Posto> atualizarPosto(String id, Posto posto);
+	public String listar(Model model);
 
-	public ResponseEntity<HttpStatus> deletarPosto(String id);
+	public String visualizar(String id, Model model);
 
-	public ResponseEntity<Posto> criarPosto(Posto posto);
-	
+	public String pesquisarNome();
+
+	public String pesquisar(String nome, Model model);
 
 }

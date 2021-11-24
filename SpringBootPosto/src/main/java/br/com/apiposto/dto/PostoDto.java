@@ -1,11 +1,13 @@
 package br.com.apiposto.dto;
 
+import org.bson.types.ObjectId;
+
 import br.com.apiposto.modelo.Posto;
 
 public class PostoDto {
 
 	
-	private String id;
+	private ObjectId id;
 	private String nome;
 
 	public PostoDto(Posto posto) {
@@ -21,11 +23,11 @@ public class PostoDto {
 		this.nome = nome;
 	}
 
-	public String getId() {
+	public ObjectId getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 

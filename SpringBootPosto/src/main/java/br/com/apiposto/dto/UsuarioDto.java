@@ -1,10 +1,12 @@
 package br.com.apiposto.dto;
 
+import org.bson.types.ObjectId;
+
 import br.com.apiposto.modelo.Usuario;
 
 public class UsuarioDto {
 
-	private String id;
+	private ObjectId id;
 	private String nome;
 
 	public UsuarioDto(Usuario usuario) {
@@ -20,11 +22,11 @@ public class UsuarioDto {
 		this.nome = nome;
 	}
 
-	public String getId() {
+	public ObjectId getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 

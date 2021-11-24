@@ -1,53 +1,54 @@
 package br.com.apiposto.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import br.com.apiposto.modelo.Posto;
 import br.com.apiposto.service.PostoService;
 
-@RestController
-@RequestMapping("/postos")
+@Controller
 public class PostoController {
 
 	@Autowired
 	private PostoService postoService;
 
-	@GetMapping
-	public ResponseEntity<List<Posto>> obterTodos(@RequestParam (required = false) String nome) {
-		return this.postoService.obterTodos(nome);
+	@GetMapping("/posto/cadastrar")
+	public String cadastrar(Model model) {
+		return this.postoService.cadastrar(model);
 	}
 
-	@GetMapping("/{id}")
-	public ResponseEntity<Posto> obterPorId (@PathVariable ("id") String id) {
-		return this.postoService.obterPorId(id);
+	@GetMapping("/posto/listar")
+	public String listar(Model model) {
+		return this.postoService.listar(model);
 	}
 
-	@PutMapping("/{id}")
-	public ResponseEntity<Posto> atualizaPosto( @PathVariable ("id") String id, @RequestBody Posto posto){
-		return this.postoService.atualizarPosto(id, posto);
+	@GetMapping("/posto/visualizar/{id}")
+	public String visualizar (@PathVariable String id, Model model) {
+		return this.postoService.visualizar(id, model);
 	}
 	
-	@DeleteMapping
-	public ResponseEntity<HttpStatus> deletarPosto (@PathVariable ("id") String id) {
-		return this.postoService.deletarPosto(id);
+	@GetMapping ("/posto/pesquisarnome")
+	public String pesquisarNome() {
+		return this.postoService.pesquisarNome();
 	}
 	
-	@PostMapping
-	public ResponseEntity<Posto> criarPosto (@RequestBody Posto posto) {
-		return this.postoService.criarPosto(posto);
+	@GetMapping("/posto/pesquisar")
+	public String pesquisar(@RequestParam("nome") String nome, Model model){
+		return this.postoService.pesquisar(nome, model);
 	}
-
+	
+	@PostMapping("/posto/cadastrar")
+	public String salvar(@ModelAttribute Posto posto) {
+		return this.postoService.salvar(posto);
+	}
+	
 }
+
+
+

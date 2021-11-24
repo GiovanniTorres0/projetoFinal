@@ -1,23 +1,21 @@
 package br.com.apiposto.service;
 
-import java.util.List;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 
 import br.com.apiposto.modelo.Usuario;
-import br.com.apiposto.service.imp.GeolocalizacaoService;
 
 public interface UsuarioService {
 
-	public ResponseEntity<List<Usuario>> obterTodos(String nome);
+	public String cadastrar(Model model);
 
-	public ResponseEntity<Usuario> obterPorId(String id);
+	public String salvar(Usuario usuario);
 
-	public ResponseEntity<Usuario> atualizarUsuario(String id, Usuario usuario);
+	public String listar(Model model);
 
-	public ResponseEntity<HttpStatus> deletarUsuario(String id);
+	public String visualizar(String id, Model model);
 
-	public ResponseEntity<Usuario> criarUsuario(Usuario usuario, GeolocalizacaoService geolocalizacaoService);
+	public String pesquisarNome();
+
+	public String pesquisar(String nome, Model model);
 
 }

@@ -1,15 +1,12 @@
 package br.com.apiposto.service.imp;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import br.com.apiposto.modelo.Usuario;
@@ -22,76 +19,59 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 
+	@Autowired
+	private GeolocalizacaoService geolocalizacaoService;
+
 	@Override
-	public ResponseEntity<List<Usuario>> obterTodos(@RequestParam(required = false) String nome) {
-		try {
-			List<Usuario> usuarios = new ArrayList<Usuario>();
-
-			if (nome == null)
-				usuarioRepository.findAll().forEach(usuarios::add);
-			else
-				usuarioRepository.findByNomeContaining(nome).forEach(usuarios::add);
-
-			if (usuarios.isEmpty()) {
-				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
-			}
-
-			return new ResponseEntity<>(usuarios, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-
+	public String cadastrar(Model model) {
+		model.addAttribute("usuario", new Usuario());
+		return "usuario/cadastrar";
 	}
 
 	@Override
-	public ResponseEntity<Usuario> obterPorId(@PathVariable("id") String id) {
-		Optional<Usuario> Optional = usuarioRepository.findById(id);
-
-		if (Optional.isPresent()) {
-			return new ResponseEntity<>(Optional.get(), HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
-
-	@Override
-	public ResponseEntity<Usuario> atualizarUsuario(@PathVariable("id") String id, @RequestBody Usuario usuario) {
-		Optional<Usuario> Optional = usuarioRepository.findById(id);
-
-		if (Optional.isPresent()) {
-			Usuario _usuario = Optional.get();
-			_usuario.setNome(usuario.getNome());
-			_usuario.setUbicacion(usuario.getUbicacion());
-			return new ResponseEntity<>(usuarioRepository.save(_usuario), HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-
-	}
-
-	@Override
-	public ResponseEntity<HttpStatus> deletarUsuario(@PathVariable("id") String id) {
-		try {
-			usuarioRepository.deleteById(id);
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-
-	}
-
-	@Override
-	public ResponseEntity<Usuario> criarUsuario(@RequestBody Usuario usuario,
-			GeolocalizacaoService geolocalizacaoService) {
+	public String salvar(@ModelAttribute Usuario usuario) {
+		System.out.println("Posto para salvar: " + usuario);
 		try {
 			List<Double> latElong = geolocalizacaoService.obterLateLong(usuario.getUbicacion());
 			usuario.getUbicacion().setCoordenadas(latElong);
-			Usuario _usuario = usuarioRepository.save(new Usuario(usuario.getNome(), usuario.getUbicacion()));
-			return new ResponseEntity<>(_usuario, HttpStatus.CREATED);
+			usuarioRepository.salvar(usuario);
 		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			System.out.println("Endereco nao localizado");
+			e.printStackTrace();
 		}
+
+		return "redirect:/";
+	}
+
+	@Override
+	public String listar(Model model) {
+		List<Usuario> usuarios = usuarioRepository.obterTodosUsuarios();
+		model.addAttribute("usuario", usuarios);
+		return "usuario/listar";
+	}
+
+	@Override
+	public String visualizar(@PathVariable String id, Model model) {
+
+		Usuario usuario = usuarioRepository.obterUsuarioPor(id);
+
+		model.addAttribute("usuario", usuario);
+
+		return "usuario/visualizar";
+	}
+
+	@Override
+	public String pesquisarNome() {
+		return "usuario/pesquisarnome";
+	}
+
+	@Override
+	public String pesquisar(@RequestParam("nome") String nome, Model model) {
+		List<Usuario> usuarios = usuarioRepository.pesquisarPor(nome);
+
+		model.addAttribute("usuarios", usuarios);
+
+		return "usuario/pesquisarnome";
 	}
 
 }
