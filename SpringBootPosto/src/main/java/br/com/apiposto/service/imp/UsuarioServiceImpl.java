@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import br.com.apiposto.modelo.Ubicacion;
 import br.com.apiposto.modelo.Usuario;
 import br.com.apiposto.repository.UsuarioRepository;
 import br.com.apiposto.service.UsuarioService;

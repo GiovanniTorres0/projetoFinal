@@ -27,7 +27,7 @@ public class UsuarioController {
 	private UsuarioService usuarioService;
 	
 	@Autowired
-	private GeolocalizacaoService geolocalizacaoService ;
+	private GeolocalizacaoService geolocalizacaoService;
 	
 
 	@GetMapping

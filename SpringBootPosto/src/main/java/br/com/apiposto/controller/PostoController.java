@@ -19,7 +19,7 @@ import br.com.apiposto.modelo.Posto;
 import br.com.apiposto.service.PostoService;
 
 @RestController
-@RequestMapping("/Postos")
+@RequestMapping("/postos")
 public class PostoController {
 
 	@Autowired

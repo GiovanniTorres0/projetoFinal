@@ -1,0 +1,17 @@
+br\com\apiposto\modelo\Posto.class
+br\com\apiposto\repository\PostoRepository.class
+br\com\apiposto\modelo\Ubicacion.class
+br\com\apiposto\modelo\Usuario.class
+br\com\apiposto\config\SwaggerConfig.class
+br\com\apiposto\dto\UsuarioDto.class
+br\com\apiposto\repository\UsuarioRepository.class
+br\com\apiposto\service\PostoService.class
+br\com\apiposto\controller\PostoController.class
+br\com\apiposto\service\imp\PostoServiceImpl.class
+br\com\apiposto\controller\UsuarioController.class
+br\com\apiposto\config\SwaggerConfig$SwaggerConfiguration.class
+br\com\apiposto\dto\PostoDto.class
+br\com\apiposto\service\imp\UsuarioServiceImpl.class
+br\com\apiposto\service\UsuarioService.class
+br\com\apiposto\service\imp\GeolocalizacaoService.class
+br\com\apiposto\ApipostoApplication.class
