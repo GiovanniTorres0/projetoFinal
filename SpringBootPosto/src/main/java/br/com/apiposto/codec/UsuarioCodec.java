@@ -36,7 +36,7 @@ public class UsuarioCodec implements CollectibleCodec<Usuario> {
 		document.put("nome", nome);
 
 		List<Double> coordinates = new ArrayList<Double>();
-		for (Double location : ubicacion.getCoordenadas()) {
+		for (Double location : ubicacion.getCordinates()) {
 
 			coordinates.add(location);
 		}

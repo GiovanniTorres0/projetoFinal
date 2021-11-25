@@ -88,7 +88,7 @@ public class UsuarioRepository {
 
 		usuarioCollection.createIndex(Indexes.geo2dsphere("ubicacion"));
 
-		List<Double> coordinates = usuario.getUbicacion().getCoordenadas();
+		List<Double> coordinates = usuario.getUbicacion().getCordinates();
 		Point pontoReferencia = new Point(new Position(coordinates.get(0), coordinates.get(1)));
 
 		MongoCursor<Usuario> resultados = usuarioCollection

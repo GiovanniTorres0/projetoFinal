@@ -33,7 +33,7 @@ public class PostoServiceImpl implements PostoService {
 		System.out.println("Posto para salvar: " + posto);
 		try {
 			List<Double> latElong = geolocalizacaoService.obterLateLong(posto.getUbicacion());
-			posto.getUbicacion().setCoordenadas(latElong);
+			posto.getUbicacion().setCordinates(latElong);
 			postoRepository.salvar(posto);
 		} catch (Exception e) {
 			System.out.println("Endereco nao localizado");

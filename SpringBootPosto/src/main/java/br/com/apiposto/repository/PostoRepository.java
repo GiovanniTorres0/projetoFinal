@@ -88,7 +88,7 @@ public class PostoRepository {
 
 		postoCollection.createIndex(Indexes.geo2dsphere("ubicacion"));
 
-		List<Double> coordinates = posto.getUbicacion().getCoordenadas();
+		List<Double> coordinates = posto.getUbicacion().getCordinates();
 		Point pontoReferencia = new Point(new Position(coordinates.get(0), coordinates.get(1)));
 
 		MongoCursor<Posto> resultados = postoCollection

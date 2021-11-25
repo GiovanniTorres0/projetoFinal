@@ -20,7 +20,7 @@ import br.com.apiposto.modelo.Ubicacion;
 public class GeolocalizacaoService {
 
 	public List<Double> obterLateLong(Ubicacion ubicacion) throws ApiException, InterruptedException, IOException{
-		GeoApiContext context =new GeoApiContext().setApiKey("KEY_API_FALTANTE");
+		GeoApiContext context =new GeoApiContext().setApiKey("AIzaSyD9rUZ_MtqyuD2s3sOFNBNlVJabNLGgMUA");
 		GeocodingApiRequest request =GeocodingApi.newRequest(context).address(ubicacion.getEndereco());
 		GeocodingResult [] result =request.await();
 		GeocodingResult resultado = result[0];

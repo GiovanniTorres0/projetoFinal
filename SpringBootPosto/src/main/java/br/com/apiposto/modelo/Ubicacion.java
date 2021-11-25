@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Ubicacion {
 
 	private String endereco;
-	private List<Double> coordenadas;
+	private List<Double> cordinates;
 	private String type = "Point";
 
 	public Ubicacion() {
@@ -16,7 +16,7 @@ public class Ubicacion {
 
 	public Ubicacion(String endereco, List<Double> coordenadas) {
 		this.endereco = endereco;
-		this.coordenadas = coordenadas;
+		this.cordinates = coordenadas;
 	}
 
 	public String getEndereco() {
@@ -27,12 +27,12 @@ public class Ubicacion {
 		this.endereco = endereco;
 	}
 
-	public List<Double> getCoordenadas() {
-		return coordenadas;
+	public List<Double> getCordinates() {
+		return cordinates;
 	}
 
-	public void setCoordenadas(List<Double> coordenadas) {
-		this.coordenadas = coordenadas;
+	public void setCordinates(List<Double> cordinates) {
+		this.cordinates = cordinates;
 	}
 
 	public String getType() {

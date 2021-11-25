@@ -33,7 +33,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 		System.out.println("Posto para salvar: " + usuario);
 		try {
 			List<Double> latElong = geolocalizacaoService.obterLateLong(usuario.getUbicacion());
-			usuario.getUbicacion().setCoordenadas(latElong);
+			usuario.getUbicacion().setCordinates(latElong);
 			usuarioRepository.salvar(usuario);
 		} catch (Exception e) {
 			System.out.println("Endereco nao localizado");
