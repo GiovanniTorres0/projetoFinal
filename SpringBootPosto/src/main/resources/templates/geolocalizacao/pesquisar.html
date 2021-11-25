@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8" />
+	<link type="text/css" rel="stylesheet" href="../../materialize/css/materialize.min.css" media="screen,projection" />
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+	<title>EscolAlura</title>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="../js/inicializar.js"></script>
+
+</head>
+
+<body class="grey lighten-3">
+	<div id="formularioGeolocalizacao" class="container">
+		<h3 class="main-title center">Visualizar Postos</h3>
+		<div class="row">
+
+			<div id="map" style="width:100%; height:300px; "></div>
+			<script>
+				function initMap() {
+					var map = new google.maps.Map(document.getElementById('map'), {
+						center: { lat: -30.8935199, lng: -55.5356138 },
+						zoom: 15
+					});
+				}
+
+			</script>
+			<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9rUZ_MtqyuD2s3sOFNBNlVJabNLGgMUA &amp;callback=initMap" 
+			async="async"	defer="defer"></script>
+		</div>
+	</div>
+	<script type="text/javascript" src="../../materialize/js/materialize.min.js"></script>
+</body>
+
+</html>
+

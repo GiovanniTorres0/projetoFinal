@@ -72,6 +72,14 @@
 			<artifactId>google-maps-services</artifactId>
 			<version>0.1.20</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.github.gilberto-torrezan</groupId>
+			<artifactId>viacep</artifactId>
+			<version>1.2.0</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>

@@ -5,7 +5,6 @@ public class ErroDeFormularioDto {
 	private String erro;
 
 	public ErroDeFormularioDto(String field, String mensagem) {
-		// TODO Auto-generated constructor stub
 		this.campo = field;
 		this.erro = mensagem;
 	}
