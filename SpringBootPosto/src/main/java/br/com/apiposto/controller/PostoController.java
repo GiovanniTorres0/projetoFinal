@@ -1,6 +1,10 @@
 package br.com.apiposto.controller;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,36 +23,62 @@ public class PostoController {
 	private PostoService postoService;
 
 	@GetMapping("/posto/cadastrar")
-	public String cadastrar(Model model) {
-		return this.postoService.cadastrar(model);
+	public ResponseEntity<String> cadastrar(Model model) {
+		try {
+			return new ResponseEntity<>(this.postoService.cadastrar(model), HttpStatus.OK);
+
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+
+		}
 	}
 
 	@GetMapping("/posto/listar")
-	public String listar(Model model) {
-		return this.postoService.listar(model);
+	public ResponseEntity<String> listar(Model model) {
+		try {
+			return new ResponseEntity<>(this.postoService.listar(model), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		}
 	}
 
 	@GetMapping("/posto/visualizar/{id}")
-	public String visualizar (@PathVariable String id, Model model) {
-		return this.postoService.visualizar(id, model);
+	public ResponseEntity<String> visualizar(@PathVariable String id, Model model) {
+		try {
+			return new ResponseEntity<>(this.postoService.visualizar(id, model), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		}
+
 	}
-	
-	@GetMapping ("/posto/pesquisarnome")
-	public String pesquisarNome() {
-		return this.postoService.pesquisarNome();
+
+	@GetMapping("/posto/pesquisarnome")
+	public ResponseEntity<String> pesquisarNome() {
+		try {
+			return new ResponseEntity<>(this.postoService.pesquisarNome(), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		}
+
 	}
-	
+
 	@GetMapping("/posto/pesquisar")
-	public String pesquisar(@RequestParam("nome") String nome, Model model){
-		return this.postoService.pesquisar(nome, model);
+	public ResponseEntity<String> pesquisar(@RequestParam("nome") String nome, Model model) {
+		try {
+			return new ResponseEntity<>(this.postoService.pesquisar(nome, model), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
-	
-	@PostMapping("/posto/cadastrar")
-	public String salvar(@ModelAttribute Posto posto) {
-		return this.postoService.salvar(posto);
+
+	@PostMapping("/posto/salvar")
+	public ResponseEntity<String> salvar(@ModelAttribute Posto posto) {
+		try {
+			return new ResponseEntity<>(this.postoService.salvar(posto), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
 	}
-	
+
 }
-
-
-

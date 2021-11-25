@@ -25,7 +25,7 @@ public class PostoServiceImpl implements PostoService {
 	@Override
 	public String cadastrar(Model model) {
 		model.addAttribute("posto", new Posto());
-		return "posto/cadastrar";
+		return "/cadastrar";
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class PostoServiceImpl implements PostoService {
 	public String listar(Model model) {
 		List<Posto> postos = postoRepository.obterTodosPostos();
 		model.addAttribute("postos", postos);
-		return "posto/listar";
+		return "/listar";
 	}
 
 	@Override
@@ -57,12 +57,12 @@ public class PostoServiceImpl implements PostoService {
 
 		model.addAttribute("posto", posto);
 
-		return "posto/visualizar";
+		return "/visualizar";
 	}
 
 	@Override
 	public String pesquisarNome() {
-		return "posto/pesquisarnome";
+		return "/pesquisarnome";
 	}
 
 	@Override
@@ -71,7 +71,7 @@ public class PostoServiceImpl implements PostoService {
 
 		model.addAttribute("postos", postos);
 
-		return "posto/pesquisarnome";
+		return "/pesquisarnome";
 	}
 
 }

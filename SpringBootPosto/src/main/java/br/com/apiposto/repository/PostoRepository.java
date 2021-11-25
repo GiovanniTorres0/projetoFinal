@@ -8,6 +8,7 @@ import org.bson.codecs.Codec;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.types.ObjectId;
+import org.springframework.stereotype.Repository;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
@@ -22,6 +23,7 @@ import com.mongodb.client.model.geojson.Position;
 import br.com.apiposto.codec.PostoCodec;
 import br.com.apiposto.modelo.Posto;
 
+@Repository
 public class PostoRepository {
 
 	private MongoClient cliente;

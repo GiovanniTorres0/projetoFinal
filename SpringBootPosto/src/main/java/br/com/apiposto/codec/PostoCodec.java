@@ -84,5 +84,3 @@ public class PostoCodec implements CollectibleCodec<Posto> {
 	}
 
 }
-	
-
