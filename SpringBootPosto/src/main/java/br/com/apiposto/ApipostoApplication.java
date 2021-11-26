@@ -7,10 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ApipostoApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ApipostoApplication.class, args);
-		
 
-		
+		SpringApplication.run(ApipostoApplication.class, args);
+
 	}
 
 }

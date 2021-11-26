@@ -33,12 +33,9 @@ public class PostoRepository {
 		Codec<Document> codec = MongoClient.getDefaultCodecRegistry().get(Document.class);
 
 		PostoCodec postoCodec = new PostoCodec(codec);
-
 		CodecRegistry registro = CodecRegistries.fromRegistries(MongoClient.getDefaultCodecRegistry(),
-				CodecRegistries.fromCodecs(postoCodec));
-
+		CodecRegistries.fromCodecs(postoCodec));
 		MongoClientOptions opcoes = MongoClientOptions.builder().codecRegistry(registro).build();
-
 		this.cliente = new MongoClient("localhost:27017", opcoes);
 		this.bancaDeDados = cliente.getDatabase("test");
 
@@ -64,12 +61,9 @@ public class PostoRepository {
 	public List<Posto> obterTodosPostos() {
 		criarConexao();
 		MongoCollection<Posto> postos = this.bancaDeDados.getCollection("postos", Posto.class);
-
 		MongoCursor<Posto> resultados = postos.find().iterator();
-
 		List<Posto> postosEncontrados = popularPostos(resultados);
 		fecharConexao();
-
 		return postosEncontrados;
 
 	}

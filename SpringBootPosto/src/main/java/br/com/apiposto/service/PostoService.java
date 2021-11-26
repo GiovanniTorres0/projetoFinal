@@ -6,16 +6,13 @@ import br.com.apiposto.modelo.Posto;
 
 public interface PostoService {
 
-	public String cadastrar(Model model);
+	public void salvar(Posto posto);
 
-	public String salvar(Posto posto);
+	public void listar(Model model);
 
-	public String listar(Model model);
+	public void pesquisar(String nome, Model model);
 
-	public String visualizar(String id, Model model);
+	
 
-	public String pesquisarNome();
-
-	public String pesquisar(String nome, Model model);
 
 }

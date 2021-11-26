@@ -23,14 +23,13 @@ public class UsuarioServiceImpl implements UsuarioService {
 	private GeolocalizacaoService geolocalizacaoService;
 
 	@Override
-	public String cadastrar(Model model) {
+	public void cadastrar(Model model) {
 		model.addAttribute("usuario", new Usuario());
-		return "usuario/cadastrar";
 	}
 
 	@Override
-	public String salvar(@ModelAttribute Usuario usuario) {
-		System.out.println("Posto para salvar: " + usuario);
+	public void salvar(@ModelAttribute Usuario usuario) {
+		System.out.println("Usuario para salvar: " + usuario);
 		try {
 			List<Double> latElong = geolocalizacaoService.obterLateLong(usuario.getUbicacion());
 			usuario.getUbicacion().setCordinates(latElong);
@@ -40,38 +39,29 @@ public class UsuarioServiceImpl implements UsuarioService {
 			e.printStackTrace();
 		}
 
-		return "redirect:/";
 	}
 
 	@Override
-	public String listar(Model model) {
+	public void listar(Model model) {
 		List<Usuario> usuarios = usuarioRepository.obterTodosUsuarios();
 		model.addAttribute("usuario", usuarios);
-		return "usuario/listar";
 	}
 
 	@Override
-	public String visualizar(@PathVariable String id, Model model) {
+	public void visualizar(@PathVariable String id, Model model) {
 
 		Usuario usuario = usuarioRepository.obterUsuarioPor(id);
 
 		model.addAttribute("usuario", usuario);
 
-		return "usuario/visualizar";
 	}
 
 	@Override
-	public String pesquisarNome() {
-		return "usuario/pesquisarnome";
-	}
-
-	@Override
-	public String pesquisar(@RequestParam("nome") String nome, Model model) {
+	public void pesquisar(@RequestParam("nome") String nome, Model model) {
 		List<Usuario> usuarios = usuarioRepository.pesquisarPor(nome);
 
 		model.addAttribute("usuarios", usuarios);
 
-		return "usuario/pesquisarnome";
 	}
 
 }

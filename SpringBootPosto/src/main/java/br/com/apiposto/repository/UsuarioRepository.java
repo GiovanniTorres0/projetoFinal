@@ -64,12 +64,9 @@ public class UsuarioRepository {
 	public List<Usuario> obterTodosUsuarios() {
 		criarConexao();
 		MongoCollection<Usuario> usuarios = this.bancaDeDados.getCollection("usuarios", Usuario.class);
-
 		MongoCursor<Usuario> resultados = usuarios.find().iterator();
-
 		List<Usuario> usuariosEncontrados = popularUsuarios(resultados);
 		fecharConexao();
-
 		return usuariosEncontrados;
 
 	}

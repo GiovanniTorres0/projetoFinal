@@ -6,16 +6,15 @@ import br.com.apiposto.modelo.Usuario;
 
 public interface UsuarioService {
 
-	public String cadastrar(Model model);
+	public void cadastrar(Model model);
 
-	public String salvar(Usuario usuario);
+	public void salvar(Usuario usuario);
 
-	public String listar(Model model);
+	public void listar(Model model);
 
-	public String visualizar(String id, Model model);
+	public void visualizar(String id, Model model);
 
-	public String pesquisarNome();
+	public void pesquisar(String nome, Model model);
 
-	public String pesquisar(String nome, Model model);
 
 }
