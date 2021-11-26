@@ -39,7 +39,7 @@ public class PostoCodec implements CollectibleCodec<Posto> {
 		for (Double location : ubicacion.getCordinates()) {
 
 			coordinates.add(location);
-		}
+		} 	
 
 		document.put("ubicacion", new Document().append("endereco", ubicacion.getEndereco())
 				.append("coordinates", coordinates).append("type", ubicacion.getType()));

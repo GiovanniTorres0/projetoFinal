@@ -14,9 +14,9 @@ public class Ubicacion {
 	public Ubicacion() {
 	}
 
-	public Ubicacion(String endereco, List<Double> coordenadas) {
+	public Ubicacion(String endereco, List<Double> cordinates) {
 		this.endereco = endereco;
-		this.cordinates = coordenadas;
+		this.cordinates = cordinates;
 	}
 
 	public String getEndereco() {

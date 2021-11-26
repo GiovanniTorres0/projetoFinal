@@ -79,4 +79,10 @@ public class PostoController {
 
 	}
 
+	@GetMapping("/posto/cadastrartest")
+	public String PostoCadastrar(Model model) {
+		model.addAttribute("posto", new Posto());
+		return "posto/cadastar";
+	}
+
 }
