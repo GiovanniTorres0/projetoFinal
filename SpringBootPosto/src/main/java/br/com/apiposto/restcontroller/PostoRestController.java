@@ -18,7 +18,7 @@ import br.com.apiposto.service.PostoServiceApi;
 
 @RestController
 @RequestMapping("/posto/api")
-public class PostoController {
+public class PostoRestController {
 
 	@Autowired
 	private PostoServiceApi postoServiceAPI;

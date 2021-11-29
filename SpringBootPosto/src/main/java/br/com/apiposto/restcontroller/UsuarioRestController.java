@@ -18,7 +18,7 @@ import br.com.apiposto.service.UsuarioServiceApi;
 @RestController
 @RequestMapping("/usuario/api")
 
-public class UsuarioController {
+public class UsuarioRestController {
 
 	@Autowired
 	private UsuarioServiceApi usuarioServiceAPI;
