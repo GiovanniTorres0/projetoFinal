@@ -1,7 +1,5 @@
 package br.com.apiposto.modelo;
 
-
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -9,23 +7,21 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Usuario {
 
 	@Id
-	private ObjectId id;
+	private Long id;
 	private String nome;
-	private Ubicacion ubicacion;
 
 	public Usuario() {
 	}
 
-	public Usuario(String nome, Ubicacion ubicacion) {
+	public Usuario(String nome) {
 		this.nome = nome;
-		this.ubicacion = ubicacion;
 	}
 
-	public ObjectId getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(ObjectId id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -36,21 +32,5 @@ public class Usuario {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
-	public Ubicacion getUbicacion() {
-		return ubicacion;
-	}
-
-	public void setUbicacion(Ubicacion gps) {
-		this.ubicacion = gps;
-	}
-
-	public Usuario criarId() {
-		setId(new ObjectId());
-		return this;
-	}
-
-
-	
 
 }
