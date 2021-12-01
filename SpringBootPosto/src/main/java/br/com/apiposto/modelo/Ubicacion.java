@@ -18,12 +18,22 @@ public class Ubicacion {
 	public Ubicacion() {
 	}
 
-	public Ubicacion(String endereco, List<Double> cordinates, String cep) {
+	public Ubicacion(String endereco, List<Double> coordinates, String cep) {
 		this.endereco = endereco;
-		this.coordinates = cordinates;
+		this.coordinates = coordinates;
 		this.cep =cep;
 	}
 	
+	
+	
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getCep() {
 		return cep;
@@ -41,11 +51,11 @@ public class Ubicacion {
 		this.endereco = endereco;
 	}
 
-	public List<Double> getCordinates() {
+	public List<Double> getCoordinates() {
 		return coordinates;
 	}
 
-	public void setCordinates(List<Double> cordinates) {
+	public void setCoordinates(List<Double> cordinates) {
 		this.coordinates = cordinates;
 	}
 

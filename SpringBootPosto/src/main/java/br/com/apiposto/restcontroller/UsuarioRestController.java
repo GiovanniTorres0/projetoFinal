@@ -45,7 +45,7 @@ public class UsuarioRestController {
 	@PostMapping(value = "/save")
 	public ResponseEntity<Usuario> save(@ModelAttribute Usuario usuario) {
 
-		System.out.println(usuario);
+		usuario.getUbicacion().setId((long) 1);
 
 		ViaCEPClient cliente = new ViaCEPClient();
 		try {
@@ -57,7 +57,7 @@ public class UsuarioRestController {
 
 		try {
 			List<Double> latElong = geolocalizacaoService.obterLatELong(usuario.getUbicacion());
-			usuario.getUbicacion().setCordinates(latElong);
+			usuario.getUbicacion().setCoordinates(latElong);
 
 		} catch (ApiException e) {
 			System.out.println("API Exception");
