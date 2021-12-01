@@ -5,4 +5,5 @@ import br.com.apiposto.modelo.Usuario;
 
 public interface UsuarioServiceApi extends GenericServiceAPI<Usuario, Long > {
 
+
 }

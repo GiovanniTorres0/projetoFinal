@@ -22,4 +22,5 @@ public class UsuarioSertiveceImpl extends GenericServiceImpl<Usuario, Long> impl
 		return usuarioRepositoy;
 	}
 
+	
 }
