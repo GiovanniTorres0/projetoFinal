@@ -8,6 +8,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "postos")
 public class Posto {
 
+	//comentario
+	
 	@Id
 	private Long id;
 	private String nome;
