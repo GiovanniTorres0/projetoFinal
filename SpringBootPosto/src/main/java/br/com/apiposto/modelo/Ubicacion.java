@@ -2,11 +2,14 @@ package br.com.apiposto.modelo;
 
 import java.util.List;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "ubicacion")
 public class Ubicacion {
 
+	@Id
+	private Long id;	
 	private String endereco;
 	private String cep;
 	private List<Double> coordinates;

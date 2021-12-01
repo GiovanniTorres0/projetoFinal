@@ -1,16 +1,18 @@
 package br.com.apiposto.modelo;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
 @Document(collection = "postos")
 public class Posto {
 
-	
+	@Id
 	private Long id;
 	private String nome;
-//	@DBRef
-//	private Ubicacion ubicacion;
+	@DBRef
+	private Ubicacion ubicacion;
 
 	public Posto() {
 
