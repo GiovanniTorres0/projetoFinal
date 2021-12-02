@@ -1,5 +1,8 @@
 package br.com.apiposto.dto;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import br.com.apiposto.modelo.Posto;
 
 public class PostoDto {
@@ -29,4 +32,8 @@ public class PostoDto {
 		this.id = id;
 	}
 
+	public static List<PostoDto> converter(List<Posto> postos) {
+		return postos.stream().map(PostoDto::new).collect(Collectors.toList());
+	
+}
 }

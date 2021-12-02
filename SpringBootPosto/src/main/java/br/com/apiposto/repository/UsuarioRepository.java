@@ -23,5 +23,7 @@ public interface UsuarioRepository extends MongoRepository<Usuario, Long> {
 			+ "})")
 	List<Usuario> pesquisaPorGeolocalizacao(Usuario usuario);
 
+	
+	
 
 }

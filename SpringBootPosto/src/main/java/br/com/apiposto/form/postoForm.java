@@ -4,29 +4,28 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class postoForm {
-	
+
 	@NotNull
 	@NotEmpty
 	private String nome;
-	
 	@NotNull
 	@NotEmpty
-	private String ubicacion;
-
-	public postoForm() {
-	}
-
-	public postoForm(String nome, String ubicacion) {
-		this.nome = nome;
-		this.ubicacion = ubicacion;
-	}
+	private String cep;
 
 	public String getNome() {
 		return nome;
 	}
 
-	public String getUbicacion() {
-		return ubicacion;
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
 	}
 
 }

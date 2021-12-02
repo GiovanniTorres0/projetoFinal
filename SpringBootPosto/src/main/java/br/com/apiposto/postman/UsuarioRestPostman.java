@@ -17,6 +17,7 @@ import com.github.gilbertotorrezan.viacep.se.ViaCEPClient;
 import com.github.gilbertotorrezan.viacep.shared.ViaCEPEndereco;
 import com.google.maps.errors.ApiException;
 
+import br.com.apiposto.dto.UsuarioDto;
 import br.com.apiposto.modelo.Usuario;
 import br.com.apiposto.service.UsuarioServiceApi;
 import br.com.apiposto.service.imp.GeolocalizacaoService;
@@ -32,8 +33,9 @@ public class UsuarioRestPostman {
 	private GeolocalizacaoService geolocalizacaoService;
 
 	@GetMapping(value = "/all")
-	public List<Usuario> getAll() {
-		return usuarioServiceAPI.getAll();
+	public List<UsuarioDto> getAll() {
+		List<Usuario> usuarios = usuarioServiceAPI.getAll();
+		return UsuarioDto.converter(usuarios);
 	}
 
 	@GetMapping(value = "/find/{id}")

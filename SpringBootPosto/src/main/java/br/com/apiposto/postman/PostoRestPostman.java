@@ -16,7 +16,7 @@ import br.com.apiposto.modelo.Posto;
 import br.com.apiposto.service.PostoServiceApi;
 
 @RestController
-@RequestMapping("/posto")
+@RequestMapping("/posto/postman")
 public class PostoRestPostman {
 
 	
