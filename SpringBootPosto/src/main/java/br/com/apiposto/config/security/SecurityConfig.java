@@ -11,7 +11,11 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.token.TokenService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import br.com.apiposto.repository.UsuarioRepository;
 
 @EnableWebSecurity
 @Configuration
@@ -20,6 +24,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private AutenticacaoService autenticacaoService;
 	
+	@Autowired
+	private GeraTokenService tokenService;
+	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 
 	@Override
 	@Bean
@@ -37,15 +46,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-		.antMatchers("/swagger-ui").permitAll()
-		.antMatchers(HttpMethod.GET,"/usuario/**").permitAll()
-		.antMatchers(HttpMethod.POST,"/usuario/api/save").permitAll()
+		.antMatchers(HttpMethod.GET,"/login").permitAll()
 		.antMatchers(HttpMethod.POST,"/auth").permitAll()
-		.antMatchers(HttpMethod.GET,"/geolocalizacao/*").permitAll()
 		.antMatchers(HttpMethod.GET,"/").permitAll()
 		.anyRequest().authenticated()
+		.and().formLogin().loginPage("/login")
 		.and().csrf().disable()
-		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+		.and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, usuarioRepository), UsernamePasswordAuthenticationFilter.class);
 
 	}
 
