@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
+import com.google.common.base.Optional;
+
 import br.com.apiposto.modelo.Usuario;
 
 public interface UsuarioRepository extends MongoRepository<Usuario, Long> {
@@ -22,6 +24,8 @@ public interface UsuarioRepository extends MongoRepository<Usuario, Long> {
 			+ "   }\r\n"
 			+ "})")
 	List<Usuario> pesquisaPorGeolocalizacao(Usuario usuario);
+	
+	Optional<Usuario> findByEmail(String email);
 
 	
 	
