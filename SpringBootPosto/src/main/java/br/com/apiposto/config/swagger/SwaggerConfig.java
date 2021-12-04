@@ -1,4 +1,4 @@
-package br.com.apiposto.config;
+package br.com.apiposto.config.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

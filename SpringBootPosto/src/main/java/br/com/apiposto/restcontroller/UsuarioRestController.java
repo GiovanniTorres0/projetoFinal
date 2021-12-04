@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,7 +18,7 @@ import com.github.gilbertotorrezan.viacep.shared.ViaCEPEndereco;
 import com.google.maps.errors.ApiException;
 
 import br.com.apiposto.modelo.Usuario;
-import br.com.apiposto.service.UsuarioServiceApi;
+import br.com.apiposto.service.UsuarioService;
 import br.com.apiposto.service.imp.GeolocalizacaoService;
 
 @RestController
@@ -27,7 +26,7 @@ import br.com.apiposto.service.imp.GeolocalizacaoService;
 public class UsuarioRestController {
 
 	@Autowired
-	private UsuarioServiceApi usuarioServiceAPI;
+	private UsuarioService usuarioServiceAPI;
 
 	@Autowired
 	private GeolocalizacaoService geolocalizacaoService;

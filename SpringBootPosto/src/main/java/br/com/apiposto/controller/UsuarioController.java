@@ -8,13 +8,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import br.com.apiposto.modelo.Usuario;
-import br.com.apiposto.service.UsuarioServiceApi;
+import br.com.apiposto.service.UsuarioService;
 
 @Controller
 public class UsuarioController {
 	
 	@Autowired
-	UsuarioServiceApi usuarioServiceApi;
+	UsuarioService usuarioServiceApi;
 
 	@GetMapping("usuario/cadastrar")
 	public String cadastrar(Model model) {

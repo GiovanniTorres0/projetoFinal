@@ -8,13 +8,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import br.com.apiposto.modelo.Usuario;
-import br.com.apiposto.service.UsuarioServiceApi;
+import br.com.apiposto.service.UsuarioService;
 
 @Controller
 public class GeolocalizacionController {
 
 	@Autowired
-	private UsuarioServiceApi usuarioServiceApi;
+	private UsuarioService usuarioServiceApi;
 	
 	@GetMapping("/geolocalizacao/iniciarpesquisa")
 	public String inicializarPesquisa(Model model) {

@@ -4,8 +4,12 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +23,7 @@ import com.google.maps.errors.ApiException;
 
 import br.com.apiposto.dto.UsuarioDto;
 import br.com.apiposto.modelo.Usuario;
-import br.com.apiposto.service.UsuarioServiceApi;
+import br.com.apiposto.service.UsuarioService;
 import br.com.apiposto.service.imp.GeolocalizacaoService;
 
 @RestController
@@ -27,23 +31,29 @@ import br.com.apiposto.service.imp.GeolocalizacaoService;
 public class UsuarioRestPostman {
 
 	@Autowired
-	private UsuarioServiceApi usuarioServiceAPI;
+	private UsuarioService usuarioService;
 
 	@Autowired
 	private GeolocalizacaoService geolocalizacaoService;
 
 	@GetMapping(value = "/all")
+	@Cacheable(value = "getAllUsuario")
 	public List<UsuarioDto> getAll() {
-		List<Usuario> usuarios = usuarioServiceAPI.getAll();
+		List<Usuario> usuarios = usuarioService.getAll();
 		return UsuarioDto.converter(usuarios);
 	}
 
 	@GetMapping(value = "/find/{id}")
+	@Cacheable(value = "findUsuario")
 	public Usuario find(@PathVariable Long id) {
-		return usuarioServiceAPI.get(id);
+		return usuarioService.get(id);
 	}
 
 	@PostMapping(value = "/save")
+	@Caching(evict = {
+			@CacheEvict ("getAllUsuario"),
+			@CacheEvict(value = "findUsuario", key = "#p0")
+	})	
 	public ResponseEntity<Usuario> save(@RequestBody Usuario usuario) {
 
 		usuario.getUbicacion().setId((long) 1);
@@ -75,16 +85,20 @@ public class UsuarioRestPostman {
 			e.printStackTrace();
 		}
 
-		Usuario obj = usuarioServiceAPI.save(usuario);
+		Usuario obj = usuarioService.save(usuario);
 		return new ResponseEntity<Usuario>(obj, HttpStatus.OK);
 	}
 
-	@GetMapping(value = "/delete/{id}")
+	@DeleteMapping(value = "/delete/{id}")
+	@Caching(evict = {
+			@CacheEvict ("getAllUsuario"),
+			@CacheEvict(value = "findUsuario", key = "#p0")
+	})
 	public ResponseEntity<Usuario> delete(@PathVariable Long id) {
-		Usuario usuario = usuarioServiceAPI.get(id);
+		Usuario usuario = usuarioService.get(id);
 
 		if (usuario != null) {
-			usuarioServiceAPI.delete(id);
+			usuarioService.delete(id);
 		} else {
 			return new ResponseEntity<Usuario>(HttpStatus.NO_CONTENT);
 		}
@@ -93,6 +107,3 @@ public class UsuarioRestPostman {
 	}
 
 }
-
-	
-

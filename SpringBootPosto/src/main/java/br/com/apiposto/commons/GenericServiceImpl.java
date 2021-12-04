@@ -7,22 +7,18 @@ import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-
-import br.com.apiposto.config.ErroDeValidacionHandler;
 
 @Service
-public abstract class GenericServiceImpl<T, ID extends Serializable> implements GenericServiceAPI<T, ID> {
+public abstract class GenericServiceImpl<T, ID extends Serializable> implements GenericService<T, ID> {
 
-	private MethodArgumentNotValidException exception;
-	private ErroDeValidacionHandler ev = new ErroDeValidacionHandler();
+
 
 	@Override
 	public T save(T entity) {
 		try {
 			return getDao().save(entity);
 		} catch (Exception e) {
-			ev.handler(exception);
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -32,23 +28,25 @@ public abstract class GenericServiceImpl<T, ID extends Serializable> implements 
 		try {
 			getDao().deleteById(id);
 		} catch (Exception e) {
-			ev.handler(exception);
+			e.printStackTrace();
 		}
 
 	}
 	
 	@Override
 	public T get(ID id) {
-
+	try {	
 		Optional<T> obj = getDao().findById(id);
 		if (obj.isPresent()) {
 			return obj.get();
-		} else {
-			ev.handler(exception);
-			return null;
 		}
-
+	}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
+	
 
 	@Override
 	public List<T> getAll() {
@@ -59,7 +57,7 @@ public abstract class GenericServiceImpl<T, ID extends Serializable> implements 
 			return returnList;
 
 		} catch (Exception e) {
-			ev.handler(exception);
+			e.printStackTrace();
 			return null;
 		}
 	}

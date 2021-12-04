@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.apiposto.modelo.Posto;
-import br.com.apiposto.service.PostoServiceApi;
+import br.com.apiposto.service.PostoService;
 
 
 @RestController
@@ -21,7 +21,7 @@ import br.com.apiposto.service.PostoServiceApi;
 public class PostoRestController {
 
 	@Autowired
-	private PostoServiceApi postoServiceAPI;
+	private PostoService postoServiceAPI;
 
 	@GetMapping(value = "/all")
 	public List<Posto> getAll() {

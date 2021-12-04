@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 import br.com.apiposto.commons.GenericServiceImpl;
 import br.com.apiposto.modelo.Usuario;
 import br.com.apiposto.repository.UsuarioRepository;
-import br.com.apiposto.service.UsuarioServiceApi;
+import br.com.apiposto.service.UsuarioService;
 
 
 @Service
-public class UsuarioSertiveceImpl extends GenericServiceImpl<Usuario, Long> implements UsuarioServiceApi {
+public class UsuarioSertiveceImpl extends GenericServiceImpl<Usuario, Long> implements UsuarioService {
 
 	@Autowired
 	private UsuarioRepository usuarioRepositoy;
