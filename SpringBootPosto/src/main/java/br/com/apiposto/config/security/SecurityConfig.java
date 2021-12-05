@@ -46,11 +46,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
+		.antMatchers("/usuario/**").permitAll()
 		.antMatchers(HttpMethod.GET,"/login").permitAll()
 		.antMatchers(HttpMethod.POST,"/auth").permitAll()
-		.antMatchers(HttpMethod.GET,"/").permitAll()
+		.antMatchers("/**").permitAll()
 		.anyRequest().authenticated()
-		.and().formLogin().loginPage("/login")
+		.and().formLogin()
 		.and().csrf().disable()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, usuarioRepository), UsernamePasswordAuthenticationFilter.class);
