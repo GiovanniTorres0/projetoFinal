@@ -9,11 +9,45 @@ public class UsuarioDto {
 
 	private Long id;
 	private String nome;
+	private String email;
+	private String Ubicacion;
+	private String cep;
 
+	
 	public UsuarioDto(Usuario usuario) {
 		this.id = usuario.getId();
 		this.nome = usuario.getNome();
+		this.email=usuario.getEmail();
+		this.Ubicacion=usuario.getUbicacion().getEndereco();
+		this.cep=usuario.getUbicacion().getCep();
 	}
+	
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+
+	
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getUbicacion() {
+		return Ubicacion;
+	}
+
+	public void setUbicacion(String ubicacion) {
+		Ubicacion = ubicacion;
+	}
+
 
 	public String getNome() {
 		return nome;

@@ -19,9 +19,9 @@ import br.com.apiposto.modelo.Ubicacion;
 @Service
 public class GeolocalizacaoService {
 
-	public List<Double> obterLatELong(Ubicacion ubicacion) throws ApiException, InterruptedException, IOException{
+	public List<Double> obterLatELong(Ubicacion ubicacion, String DatosEndereco) throws ApiException, InterruptedException, IOException,ArrayIndexOutOfBoundsException{
 		GeoApiContext context =new GeoApiContext().setApiKey("AIzaSyD9rUZ_MtqyuD2s3sOFNBNlVJabNLGgMUA");
-		GeocodingApiRequest request =GeocodingApi.newRequest(context).address(ubicacion.getEndereco());
+		GeocodingApiRequest request =GeocodingApi.newRequest(context).address(ubicacion.getEndereco()+" "+DatosEndereco);
 		GeocodingResult [] result =request.await();
 		GeocodingResult resultado = result[0];
 		Geometry geometry = resultado.geometry;

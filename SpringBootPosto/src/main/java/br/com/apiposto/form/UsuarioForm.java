@@ -1,18 +1,22 @@
 package br.com.apiposto.form;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.github.gilbertotorrezan.viacep.se.ViaCEPClient;
 import com.github.gilbertotorrezan.viacep.shared.ViaCEPEndereco;
+import com.google.maps.errors.ApiException;
 
 import br.com.apiposto.modelo.Ubicacion;
 import br.com.apiposto.modelo.Usuario;
+import br.com.apiposto.service.imp.GeolocalizacaoService;
 
 public class UsuarioForm {
 
@@ -23,6 +27,7 @@ public class UsuarioForm {
 	private String nome;
 	@NotNull(message = "Cep Null")
 	@NotEmpty(message = "Cep Empty")
+	@Size(min = 8 , max = 9 , message = "Cep ivalido no Brasil")
 	private String cep;
 	@NotNull(message = "Senha Null")
 	@NotEmpty(message = "Senha Empty")
@@ -108,7 +113,7 @@ public class UsuarioForm {
 		this.email = email;
 	}
 
-	public Usuario converter(UsuarioForm form) {
+	public Usuario converter(UsuarioForm form ,GeolocalizacaoService geolocalizacaoService) {
 		Usuario usuario = new Usuario();
 		usuario.setId(form.getId());
 		usuario.setNome(form.getNome());
@@ -117,13 +122,23 @@ public class UsuarioForm {
 		usuario.setUbicacion(ubicacion);
 		usuario.getUbicacion().setId((long) 1);
 
+		String DatosEndereco = null;
 		ViaCEPClient cliente = new ViaCEPClient();
+		
+		
 		try {
 			ViaCEPEndereco enderecoCep = cliente.getEndereco(form.getCep());
-			System.out.println(enderecoCep.getLogradouro() + " " + enderecoCep.getComplemento() + ", "
-					+ enderecoCep.getUf() + ", " + enderecoCep.getBairro() + ", " + enderecoCep.getIbge());
+			DatosEndereco = enderecoCep.getLogradouro() + " " + enderecoCep.getComplemento() + ", "
+					+ enderecoCep.getUf() + ", " + enderecoCep.getBairro();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Error IO");
+			e.getMessage();
+		}
+		
+		catch (NullPointerException e) {
+			String error="CEP ivalido";
+			System.out.println(error);
+			e.getMessage();
 		}
 
 		String encode = new BCryptPasswordEncoder().encode(form.getSenha());
@@ -133,8 +148,45 @@ public class UsuarioForm {
 		usuario.getUbicacion().setEndereco(form.getEndereco());
 
 		System.out.println("Convirtiendo");
+		
+		
+		
+		String optenerCordenadas = OptenerCordenadas(usuario, geolocalizacaoService, DatosEndereco);
+		
+		if(optenerCordenadas == null) {
+			return usuario;	
+		}
+		return null;
+	}
 
-		return usuario;
+	private String OptenerCordenadas(Usuario usuario, GeolocalizacaoService geolocalizacaoService, String DatosEndereco) {
+		try {
+			List<Double> latElong = geolocalizacaoService.obterLatELong(usuario.getUbicacion(), DatosEndereco);
+			usuario.getUbicacion().setCoordinates(latElong); 
+			
+			System.out.println(usuario.getUbicacion().getCoordinates());
+			return null;
+
+		} catch (ApiException e) {
+			String error = ("API Exception");
+			System.out.println(e.getMessage());
+			return error;
+
+		} catch (InterruptedException e) {
+			String error=("Interrupted Exception");
+			System.out.println(e.getMessage());
+			return error;
+
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+			String error = "IO Exception"; 
+			return error;
+
+		} catch (ArrayIndexOutOfBoundsException e) {
+			String error = "Indereco nao encontrado"; 
+			System.out.println(e.getMessage());
+			return error;
+		}
 	}
 
 }
