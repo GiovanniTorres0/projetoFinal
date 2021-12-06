@@ -7,5 +7,4 @@ import br.com.apiposto.modelo.Ubicacion;
 public interface UbicacionRepository extends MongoRepository<Ubicacion, Long> {
 
 	Ubicacion findByCep(String cep);
-	
 }

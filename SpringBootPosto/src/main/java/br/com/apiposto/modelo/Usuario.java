@@ -19,7 +19,6 @@ public class Usuario implements UserDetails {
 	private String nome;
 	private String email;
 	private String senha;
-	@DBRef
 	private Ubicacion ubicacion;
 	@DBRef
 	private List<Perfil> perfils =new ArrayList<>();

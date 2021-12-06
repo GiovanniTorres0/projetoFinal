@@ -31,6 +31,7 @@ public class UsuarioRestPostman {
 	@Autowired
 	private UsuarioService usuarioService;
 
+
 	@Autowired
 	private GeolocalizacaoService geolocalizacaoService;
 
@@ -39,6 +40,7 @@ public class UsuarioRestPostman {
 	public List<UsuarioDto> getAll() {
 		List<Usuario> usuarios = usuarioService.getAll();
 		return UsuarioDto.converter(usuarios);
+	
 	}
 
 	@GetMapping(value = "/find/{id}")
@@ -48,29 +50,22 @@ public class UsuarioRestPostman {
 	}
 
 	@PostMapping(value = "/save")
-	@Caching(evict = {
-			@CacheEvict ("getAllUsuario"),
-			@CacheEvict(value = "findUsuario", key = "#p0")
-	})	
+	@Caching(evict = { @CacheEvict("getAllUsuario"), @CacheEvict(value = "findUsuario", key = "#p0") })
 	public ResponseEntity<UsuarioDto> save(@RequestBody @Valid UsuarioForm usuarioForm) {
-		Usuario usuario = usuarioForm.converter(usuarioForm , geolocalizacaoService);
-		if(usuario != null) {
-		Usuario obj = usuarioService.save(usuario);
-		
-		return new ResponseEntity<UsuarioDto>(new UsuarioDto(obj), HttpStatus.OK);
-		}
-		else {
-			usuario=null;
+		Usuario usuario = usuarioForm.converter(usuarioForm, geolocalizacaoService);
+		if (usuario != null) {
+			Usuario obj = usuarioService.save(usuario);
+
+			return new ResponseEntity<UsuarioDto>(new UsuarioDto(obj), HttpStatus.OK);
+		} else {
+			usuario = null;
 			System.out.println("Usuario invalido , no se pudo salvar");
 			return new ResponseEntity<UsuarioDto>(HttpStatus.BAD_REQUEST);
 		}
 	}
 
 	@DeleteMapping(value = "/delete/{id}")
-	@Caching(evict = {
-			@CacheEvict ("getAllUsuario"),
-			@CacheEvict(value = "findUsuario", key = "#p0")
-	})
+	@Caching(evict = { @CacheEvict("getAllUsuario"), @CacheEvict(value = "findUsuario", key = "#p0") })
 	public ResponseEntity<Usuario> delete(@PathVariable Long id) {
 		Usuario usuario = usuarioService.get(id);
 

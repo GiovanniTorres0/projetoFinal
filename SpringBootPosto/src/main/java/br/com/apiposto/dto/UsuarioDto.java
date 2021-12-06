@@ -13,15 +13,14 @@ public class UsuarioDto {
 	private String Ubicacion;
 	private String cep;
 
-	
 	public UsuarioDto(Usuario usuario) {
 		this.id = usuario.getId();
 		this.nome = usuario.getNome();
-		this.email=usuario.getEmail();
-		this.Ubicacion=usuario.getUbicacion().getEndereco();
-		this.cep=usuario.getUbicacion().getCep();
+		this.email = usuario.getEmail();
+		this.Ubicacion = usuario.getUbicacion().getEndereco();
+		this.cep = usuario.getUbicacion().getCep();
 	}
-	
+
 	public String getCep() {
 		return cep;
 	}
@@ -30,8 +29,6 @@ public class UsuarioDto {
 		this.cep = cep;
 	}
 
-	
-	
 	public String getEmail() {
 		return email;
 	}
@@ -47,7 +44,6 @@ public class UsuarioDto {
 	public void setUbicacion(String ubicacion) {
 		Ubicacion = ubicacion;
 	}
-
 
 	public String getNome() {
 		return nome;
@@ -69,4 +65,5 @@ public class UsuarioDto {
 		return usuarios.stream().map(UsuarioDto::new).collect(Collectors.toList());
 
 	}
+
 }
