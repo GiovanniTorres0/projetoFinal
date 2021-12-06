@@ -6,4 +6,5 @@ import br.com.apiposto.modelo.Posto;
 
 public interface PostoRepository extends MongoRepository<Posto, Long> {
 
+	Posto findByNome(String nome);
 }

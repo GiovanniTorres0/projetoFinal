@@ -10,7 +10,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.github.gilbertotorrezan.viacep.se.ViaCEPClient;
@@ -20,7 +19,6 @@ import com.google.maps.errors.ApiException;
 import br.com.apiposto.modelo.Ubicacion;
 import br.com.apiposto.modelo.Usuario;
 import br.com.apiposto.repository.UsuarioRepository;
-import br.com.apiposto.service.UsuarioService;
 import br.com.apiposto.service.imp.GeolocalizacaoService;
 
 public class UsuarioForm {
@@ -30,7 +28,7 @@ public class UsuarioForm {
 	private String nome;
 	@NotNull(message = "Cep Null")
 	@NotEmpty(message = "Cep Empty")
-	@Size(min = 8, max = 9, message = "Cep ivalido no Brasil")
+	@Size(min = 8, max = 9, message = "Cep inválido no Brasil")
 	private String cep;
 	@NotNull(message = "Senha Null")
 	@NotEmpty(message = "Senha Empty")

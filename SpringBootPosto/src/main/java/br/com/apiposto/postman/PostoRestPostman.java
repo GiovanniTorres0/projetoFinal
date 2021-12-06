@@ -45,7 +45,7 @@ public class PostoRestPostman {
 	})	
 	public ResponseEntity<Posto> save(@RequestBody Posto posto) {
 		Posto obj = postoService.save(posto);
-		return new ResponseEntity<Posto>(obj, HttpStatus.OK);
+		return new ResponseEntity<Posto>(obj, HttpStatus.CREATED);
 	}
 
 	@DeleteMapping(value = "/delete/{id}")

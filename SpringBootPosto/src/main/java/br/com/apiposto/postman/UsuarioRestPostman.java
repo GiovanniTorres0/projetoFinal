@@ -59,10 +59,10 @@ public class UsuarioRestPostman {
 		if (usuario != null) {
 			Usuario obj = usuarioService.save(usuario);
 
-			return new ResponseEntity<UsuarioDto>(new UsuarioDto(obj), HttpStatus.OK);
+			return new ResponseEntity<UsuarioDto>(new UsuarioDto(obj), HttpStatus.CREATED);
 		} else {
 			usuario = null;
-			System.out.println("Usuario invalido , no se pudo salvar");
+			System.out.println("Usuario invalido, no se pudo salvar");
 			return new ResponseEntity<UsuarioDto>(HttpStatus.BAD_REQUEST);
 		}
 	}
