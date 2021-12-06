@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.apiposto.dto.UsuarioDto;
 import br.com.apiposto.form.UsuarioForm;
 import br.com.apiposto.modelo.Usuario;
+import br.com.apiposto.repository.UsuarioRepository;
 import br.com.apiposto.service.UsuarioService;
 import br.com.apiposto.service.imp.GeolocalizacaoService;
 
@@ -31,6 +32,8 @@ public class UsuarioRestPostman {
 	@Autowired
 	private UsuarioService usuarioService;
 
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 
 	@Autowired
 	private GeolocalizacaoService geolocalizacaoService;
@@ -52,7 +55,7 @@ public class UsuarioRestPostman {
 	@PostMapping(value = "/save")
 	@Caching(evict = { @CacheEvict("getAllUsuario"), @CacheEvict(value = "findUsuario", key = "#p0") })
 	public ResponseEntity<UsuarioDto> save(@RequestBody @Valid UsuarioForm usuarioForm) {
-		Usuario usuario = usuarioForm.converter(usuarioForm, geolocalizacaoService);
+		Usuario usuario = usuarioForm.converter(usuarioForm, geolocalizacaoService, usuarioRepository);
 		if (usuario != null) {
 			Usuario obj = usuarioService.save(usuario);
 

@@ -1,6 +1,8 @@
 package br.com.apiposto.restcontroller;
 
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,7 +29,7 @@ public class AutenticacaoController {
 	private GeraTokenService tokenService;
 	
 	@PostMapping
-	public ResponseEntity<TokenDto> autenticar(@RequestBody LoginForm form){
+	public ResponseEntity<TokenDto> autenticar(@RequestBody @Valid LoginForm form){
 		UsernamePasswordAuthenticationToken dadosLogin = form.coverter();
 		
 		try {

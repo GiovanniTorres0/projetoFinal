@@ -65,5 +65,7 @@ public class UsuarioDto {
 		return usuarios.stream().map(UsuarioDto::new).collect(Collectors.toList());
 
 	}
+	
+
 
 }

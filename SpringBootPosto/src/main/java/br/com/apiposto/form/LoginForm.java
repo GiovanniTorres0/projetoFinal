@@ -1,14 +1,17 @@
 package br.com.apiposto.form;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 public class LoginForm {
-	@NotEmpty @NotNull
+	@NotEmpty(message = "Email Empty") @NotNull(message = "Email Null") @Email(message = "Your Email is not valid")
 	private String email;
-	@NotEmpty @NotNull
+	
+	@NotEmpty(message = "Senha Empty") @NotNull(message = "Senha Null")
 	private String senha;
 
 	public String getEmail() {
