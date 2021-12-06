@@ -63,16 +63,7 @@ public class UsuarioRestPostman {
 		
 		
 		Usuario usuario = usuarioForm.converter(usuarioForm);
-		usuario.getUbicacion().setId((long) 1);
-
-		ViaCEPClient cliente = new ViaCEPClient();
-		try {
-			ViaCEPEndereco endereco = cliente.getEndereco(usuario.getUbicacion().getCep());
-			System.out.println(endereco.getLogradouro());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
+		
 		try {
 			List<Double> latElong = geolocalizacaoService.obterLatELong(usuario.getUbicacion());
 			usuario.getUbicacion().setCoordinates(latElong);
@@ -92,8 +83,7 @@ public class UsuarioRestPostman {
 			e.printStackTrace();
 		}
 
-		String encode = new BCryptPasswordEncoder().encode(usuario.getSenha());
-		usuario.setSenha(encode);
+	
 	
 		Usuario obj = usuarioService.save(usuario);
 		return new ResponseEntity<Usuario>(obj, HttpStatus.OK);
