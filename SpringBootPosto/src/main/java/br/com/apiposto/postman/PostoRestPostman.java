@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.apiposto.modelo.Posto;
 import br.com.apiposto.service.PostoService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("/posto/postman")
@@ -26,18 +29,25 @@ public class PostoRestPostman {
 	@Autowired
 	private PostoService postoService;
 
+	
+	@ApiOperation(value = "Busca varios postos", notes = "Busca varios postos de combustível", response = PostoRestPostman.class)
+	@ApiResponses({ @ApiResponse(code = 200, message = "OK") })
 	@GetMapping(value = "/all")
 	@Cacheable(value = "getAllPosto")
 	public List<Posto> getAll() {
 		return postoService.getAll();
 	}
 
+	@ApiOperation(value = "Busca um Posto", notes = "Busca um posto de combustível pelo id", response = PostoRestPostman.class)
+	@ApiResponses({ @ApiResponse(code = 200, message = "OK") })
 	@GetMapping(value = "/find/{id}")
 	@Cacheable(value = "findPosto")
 	public Posto find(@PathVariable Long id) {
 		return postoService.get(id);
 	}
-
+	
+	@ApiOperation(value = "Cadastra um Posto", notes = "Cadastro de Posto de combustível", response = PostoRestPostman.class)
+	@ApiResponses({ @ApiResponse(code = 201, message = "Created") })
 	@PostMapping(value = "/save")
 	@Caching(evict = {
 			@CacheEvict ("getAllPosto"),
@@ -48,6 +58,8 @@ public class PostoRestPostman {
 		return new ResponseEntity<Posto>(obj, HttpStatus.CREATED);
 	}
 
+	@ApiOperation(value = "Deleta um Posto", notes = "Deleta um Posto de combustível", response = PostoRestPostman.class)
+	@ApiResponses({ @ApiResponse(code = 200, message = "OK") })	
 	@DeleteMapping(value = "/delete/{id}")
 	@Caching(evict = {
 			@CacheEvict ("getAllPosto"),

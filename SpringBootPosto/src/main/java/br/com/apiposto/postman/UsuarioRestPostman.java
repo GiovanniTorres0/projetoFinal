@@ -24,6 +24,9 @@ import br.com.apiposto.modelo.Usuario;
 import br.com.apiposto.repository.UsuarioRepository;
 import br.com.apiposto.service.UsuarioService;
 import br.com.apiposto.service.imp.GeolocalizacaoService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("/usuario")
@@ -38,6 +41,8 @@ public class UsuarioRestPostman {
 	@Autowired
 	private GeolocalizacaoService geolocalizacaoService;
 
+	@ApiOperation(value = "Busca varios Usuários", notes = "Busca varios Usuários cadastrados", response = UsuarioRestPostman.class)
+	@ApiResponses({ @ApiResponse(code = 200, message = "OK") })
 	@GetMapping(value = "/all")
 	@Cacheable(value = "getAllUsuario")
 	public List<UsuarioDto> getAll() {
@@ -46,12 +51,16 @@ public class UsuarioRestPostman {
 	
 	}
 
+	@ApiOperation(value = "Busca Usuário", notes = "Busca Usuário pelo id", response = UsuarioRestPostman.class)
+	@ApiResponses({ @ApiResponse(code = 200, message = "OK") })
 	@GetMapping(value = "/find/{id}")
 	@Cacheable(value = "findUsuario")
 	public Usuario find(@PathVariable Long id) {
 		return usuarioService.get(id);
 	}
 
+	@ApiOperation(value = "Cadastra um Usuário", notes = "Cadastro de um Usuário", response = UsuarioRestPostman.class)
+	@ApiResponses({ @ApiResponse(code = 201, message = "Created") })
 	@PostMapping(value = "/save")
 	@Caching(evict = { @CacheEvict("getAllUsuario"), @CacheEvict(value = "findUsuario", key = "#p0") })
 	public ResponseEntity<UsuarioDto> save(@RequestBody @Valid UsuarioForm usuarioForm) {
@@ -67,6 +76,8 @@ public class UsuarioRestPostman {
 		}
 	}
 
+	@ApiOperation(value = "Deleta um Usuário", notes = "Deleta um Usuário pelo id", response = UsuarioRestPostman.class)
+	@ApiResponses({ @ApiResponse(code = 200, message = "OK") })	
 	@DeleteMapping(value = "/delete/{id}")
 	@Caching(evict = { @CacheEvict("getAllUsuario"), @CacheEvict(value = "findUsuario", key = "#p0") })
 	public ResponseEntity<Usuario> delete(@PathVariable Long id) {

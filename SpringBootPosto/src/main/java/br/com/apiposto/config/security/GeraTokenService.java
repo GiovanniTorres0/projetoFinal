@@ -22,7 +22,7 @@ public class GeraTokenService {
 		Date hoje = new Date();
 		Date dataExpiracao = new Date(hoje.getTime() + Long.parseLong(expiration));
 
-		return Jwts.builder().setIssuer("API do Fórum da Alura").setSubject(logado.getId().toString()).setIssuedAt(hoje)
+		return Jwts.builder().setIssuer("postoApi").setSubject(logado.getId().toString()).setIssuedAt(hoje)
 				.setExpiration(dataExpiracao).signWith(SignatureAlgorithm.HS512, secret).compact();
 	}
 
@@ -42,5 +42,6 @@ public class GeraTokenService {
 		
 		return Long.parseLong(claims.getSubject());
 	}
+	
 
 }
