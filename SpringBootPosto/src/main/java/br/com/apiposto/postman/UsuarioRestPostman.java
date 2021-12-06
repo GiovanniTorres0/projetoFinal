@@ -3,12 +3,15 @@ package br.com.apiposto.postman;
 import java.io.IOException;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +25,7 @@ import com.github.gilbertotorrezan.viacep.shared.ViaCEPEndereco;
 import com.google.maps.errors.ApiException;
 
 import br.com.apiposto.dto.UsuarioDto;
+import br.com.apiposto.form.UsuarioForm;
 import br.com.apiposto.modelo.Usuario;
 import br.com.apiposto.service.UsuarioService;
 import br.com.apiposto.service.imp.GeolocalizacaoService;
@@ -54,8 +58,11 @@ public class UsuarioRestPostman {
 			@CacheEvict ("getAllUsuario"),
 			@CacheEvict(value = "findUsuario", key = "#p0")
 	})	
-	public ResponseEntity<Usuario> save(@RequestBody Usuario usuario) {
+	public ResponseEntity<Usuario> save(@RequestBody @Valid UsuarioForm usuarioForm) {
 
+		
+		
+		Usuario usuario = usuarioForm.converter(usuarioForm);
 		usuario.getUbicacion().setId((long) 1);
 
 		ViaCEPClient cliente = new ViaCEPClient();
@@ -85,6 +92,9 @@ public class UsuarioRestPostman {
 			e.printStackTrace();
 		}
 
+		String encode = new BCryptPasswordEncoder().encode(usuario.getSenha());
+		usuario.setSenha(encode);
+	
 		Usuario obj = usuarioService.save(usuario);
 		return new ResponseEntity<Usuario>(obj, HttpStatus.OK);
 	}

@@ -1,9 +1,14 @@
 package br.com.apiposto.form;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 public class LoginForm {
+	@NotEmpty @NotNull
 	private String email;
+	@NotEmpty @NotNull
 	private String senha;
 
 	public String getEmail() {
