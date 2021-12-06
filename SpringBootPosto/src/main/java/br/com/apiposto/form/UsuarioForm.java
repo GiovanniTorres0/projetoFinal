@@ -2,12 +2,14 @@ package br.com.apiposto.form;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Random;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.github.gilbertotorrezan.viacep.se.ViaCEPClient;
@@ -20,8 +22,7 @@ import br.com.apiposto.service.imp.GeolocalizacaoService;
 
 public class UsuarioForm {
 
-	@NotNull(message = "Id Null")
-	private Long id;
+
 	@NotNull(message = "Nome Null")
 	@NotEmpty(message = "Nome Empty")
 	private String nome;
@@ -40,15 +41,16 @@ public class UsuarioForm {
 	@NotEmpty(message = "Id Empty")
 	private String endereco;
 	private Long idUbicacion;
+	private static Random idR= new Random();
 
 	
 	
 	public UsuarioForm() {
 	}
 
-	public UsuarioForm(Long id, String nome, String cep, String senha, String email, String endereco,
+	public UsuarioForm( String nome, String cep, String senha, String email, String endereco,
 			Long idUbicacion) {
-		this.id = id;
+
 		this.nome = nome;
 		this.cep = cep;
 		this.senha = senha;
@@ -71,14 +73,6 @@ public class UsuarioForm {
 
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getNome() {
@@ -115,12 +109,14 @@ public class UsuarioForm {
 
 	public Usuario converter(UsuarioForm form ,GeolocalizacaoService geolocalizacaoService) {
 		Usuario usuario = new Usuario();
-		usuario.setId(form.getId());
+		Long id=idR.nextLong();
+		System.out.println("ID "+ id +" REGISTRADOS");
+		usuario.setId(id);
 		usuario.setNome(form.getNome());
 		usuario.setEmail(form.getEmail());
 		Ubicacion ubicacion = new Ubicacion();
 		usuario.setUbicacion(ubicacion);
-		usuario.getUbicacion().setId((long) 1);
+		usuario.getUbicacion().setId(id);
 
 		String DatosEndereco = null;
 		ViaCEPClient cliente = new ViaCEPClient();

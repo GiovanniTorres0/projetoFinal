@@ -1,9 +1,8 @@
 package br.com.apiposto.modelo;
 
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Collection;
-
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -28,12 +27,12 @@ public class Usuario implements UserDetails {
 	public Usuario() {
 	}
 
-	public Usuario(Long id, String nome, String email, String senha, Ubicacion ubicacion) {
-		this.id = id;
+	public Usuario(String nome, String email, String senha, Ubicacion ubicacion) {
 		this.nome = nome;
 		this.email = email;
 		this.senha = senha;
 		this.ubicacion = ubicacion;
+
 	}
 
 	public String getEmail() {
