@@ -2,26 +2,22 @@ package br.com.apiposto.form;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.github.gilbertotorrezan.viacep.se.ViaCEPClient;
 import com.github.gilbertotorrezan.viacep.shared.ViaCEPEndereco;
 import com.google.maps.errors.ApiException;
 
+import br.com.apiposto.modelo.Posto;
 import br.com.apiposto.modelo.Ubicacion;
-import br.com.apiposto.modelo.Usuario;
-import br.com.apiposto.repository.UsuarioRepository;
+import br.com.apiposto.repository.PostoRepository;
 import br.com.apiposto.service.imp.GeolocalizacaoService;
 
-public class UsuarioForm {
+public class PostoForm {
 
 	@NotNull(message = "Nome Null")
 	@NotEmpty(message = "Nome Empty")
@@ -30,38 +26,15 @@ public class UsuarioForm {
 	@NotEmpty(message = "Cep Empty")
 	@Size(min = 8, max = 9, message = "Cep inválido no Brasil")
 	private String cep;
-	@NotNull(message = "Senha Null")
-	@NotEmpty(message = "Senha Empty")
-	private String senha;
-	@NotNull(message = "Email Null")
-	@NotEmpty(message = "Email Empty")
-	@Email(message = "Your Email is not valid")
-	private String email;
 	@NotNull(message = "Endereço Null")
 	@NotEmpty(message = "Endereço Empty")
 	private String endereco;
-	private Long idUbicacion;
 	private static Random idR = new Random();
 
-	public UsuarioForm() {
-	}
-
-	public UsuarioForm(String nome, String cep, String senha, String email, String endereco, Long idUbicacion) {
-
+	public PostoForm(String nome, String cep, String endereco) {
 		this.nome = nome;
 		this.cep = cep;
-		this.senha = senha;
-		this.email = email;
 		this.endereco = endereco;
-		this.idUbicacion = idUbicacion;
-	}
-
-	public Long getIdUbicacion() {
-		return idUbicacion;
-	}
-
-	public void setIdUbicacion(Long idUbicacion) {
-		this.idUbicacion = idUbicacion;
 	}
 
 	public String getEndereco() {
@@ -88,39 +61,16 @@ public class UsuarioForm {
 		this.cep = cep;
 	}
 
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public Usuario converter(UsuarioForm form, GeolocalizacaoService geolocalizacaoService,
-			UsuarioRepository usuarioRepository) {
-		Usuario usuario = new Usuario();
+	public Posto converterPosto(PostoForm form, GeolocalizacaoService geolocalizacaoService,
+			PostoRepository postoRepository) {
+		Posto posto = new Posto();
 		Long id = idR.nextLong();
 		System.out.println("ID " + id + " REGISTRADOS");
-		usuario.setId(id);
-		usuario.setNome(form.getNome());
+		posto.setId(id);
+		posto.setNome(form.getNome());
 		Ubicacion ubicacion = new Ubicacion();
-		usuario.setUbicacion(ubicacion);
-		usuario.getUbicacion().setId(id);
-
-		if (form.isNotPresentEmail(form.getEmail(), usuarioRepository)) {
-			usuario.setEmail(form.getEmail());
-		}
-		else {
-			return null;
-		}
+		posto.setUbicacion(ubicacion);
+		posto.getUbicacion().setId(id);
 
 		String DatosEndereco = null;
 		ViaCEPClient cliente = new ViaCEPClient();
@@ -140,39 +90,26 @@ public class UsuarioForm {
 			e.getMessage();
 		}
 
-		String encode = new BCryptPasswordEncoder().encode(form.getSenha());
-		usuario.setSenha(encode);
-
-		usuario.getUbicacion().setCep(form.getCep());
-		usuario.getUbicacion().setEndereco(form.getEndereco());
+		posto.getUbicacion().setCep(form.getCep());
+		posto.getUbicacion().setEndereco(form.getEndereco());
 
 		System.out.println("Convirtiendo");
 
-		String optenerCordenadas = optenerCordenadasUsuario(usuario, geolocalizacaoService, DatosEndereco);
+		String optenerCordenadasPosto = optenerCordenadasPosto(posto, geolocalizacaoService, DatosEndereco);
 
-		if (optenerCordenadas == null) {
-			return usuario;
+		if (optenerCordenadasPosto == null) {
+			return posto;
 		}
 		return null;
 	}
 
-	private boolean isNotPresentEmail(String email, UsuarioRepository usuarioRepository) {
-		Optional<Usuario> ValidacionDeEmail = usuarioRepository.findByEmail(email);
-		if (ValidacionDeEmail.isPresent()) {
-			return false;
-
-		}
-		return true;
-
-	}
-
-	private String optenerCordenadasUsuario(Usuario usuario, GeolocalizacaoService geolocalizacaoService,
+	private String optenerCordenadasPosto(Posto posto, GeolocalizacaoService geolocalizacaoService,
 			String DatosEndereco) {
 		try {
-			List<Double> latElong = geolocalizacaoService.obterLatELong(usuario.getUbicacion(), DatosEndereco);
-			usuario.getUbicacion().setCoordinates(latElong);
+			List<Double> latElong = geolocalizacaoService.obterLatELong(posto.getUbicacion(), DatosEndereco);
+			posto.getUbicacion().setCoordinates(latElong);
 
-			System.out.println(usuario.getUbicacion().getCoordinates());
+			System.out.println(posto.getUbicacion().getCoordinates());
 			return null;
 
 		} catch (ApiException e) {
@@ -191,7 +128,7 @@ public class UsuarioForm {
 			return error;
 
 		} catch (ArrayIndexOutOfBoundsException e) {
-			String error = "Indereco nao encontrado";
+			String error = "Endereco nao encontrado";
 			System.out.println(e.getMessage());
 			return error;
 		}

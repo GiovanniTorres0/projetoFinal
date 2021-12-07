@@ -1,4 +1,4 @@
-package br.com.apiposto.postman;
+package br.com.apiposto.controller;
 
 import java.util.List;
 
@@ -30,7 +30,7 @@ import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("/usuario")
-public class UsuarioRestPostman {
+public class UsuarioController {
 
 	@Autowired
 	private UsuarioService usuarioService;
@@ -41,7 +41,7 @@ public class UsuarioRestPostman {
 	@Autowired
 	private GeolocalizacaoService geolocalizacaoService;
 
-	@ApiOperation(value = "Busca varios Usuários", notes = "Busca varios Usuários cadastrados", response = UsuarioRestPostman.class)
+	@ApiOperation(value = "Busca varios Usuários", notes = "Busca varios Usuários cadastrados", response = UsuarioController.class)
 	@ApiResponses({ @ApiResponse(code = 200, message = "OK") })
 	@GetMapping(value = "/all")
 	@Cacheable(value = "getAllUsuario")
@@ -51,7 +51,7 @@ public class UsuarioRestPostman {
 	
 	}
 
-	@ApiOperation(value = "Busca Usuário", notes = "Busca Usuário pelo id", response = UsuarioRestPostman.class)
+	@ApiOperation(value = "Busca Usuário", notes = "Busca Usuário pelo id", response = UsuarioController.class)
 	@ApiResponses({ @ApiResponse(code = 200, message = "OK") })
 	@GetMapping(value = "/find/{id}")
 	@Cacheable(value = "findUsuario")
@@ -59,7 +59,7 @@ public class UsuarioRestPostman {
 		return usuarioService.get(id);
 	}
 
-	@ApiOperation(value = "Cadastra um Usuário", notes = "Cadastro de um Usuário", response = UsuarioRestPostman.class)
+	@ApiOperation(value = "Cadastra um Usuário", notes = "Cadastro de um Usuário", response = UsuarioController.class)
 	@ApiResponses({ @ApiResponse(code = 201, message = "Created") })
 	@PostMapping(value = "/save")
 	@Caching(evict = { @CacheEvict("getAllUsuario"), @CacheEvict(value = "findUsuario", key = "#p0") })
@@ -76,7 +76,7 @@ public class UsuarioRestPostman {
 		}
 	}
 
-	@ApiOperation(value = "Deleta um Usuário", notes = "Deleta um Usuário pelo id", response = UsuarioRestPostman.class)
+	@ApiOperation(value = "Deleta um Usuário", notes = "Deleta um Usuário pelo id", response = UsuarioController.class)
 	@ApiResponses({ @ApiResponse(code = 200, message = "OK") })	
 	@DeleteMapping(value = "/delete/{id}")
 	@Caching(evict = { @CacheEvict("getAllUsuario"), @CacheEvict(value = "findUsuario", key = "#p0") })

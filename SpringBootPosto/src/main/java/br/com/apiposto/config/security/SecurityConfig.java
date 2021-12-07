@@ -41,14 +41,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	
-
+	//Estão permitidos por motivos de testes.
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 		.antMatchers(HttpMethod.POST,"/auth").permitAll()
 		.antMatchers(HttpMethod.GET,"/usuario/all").permitAll()
 		.antMatchers(HttpMethod.POST,"/usuario/save").permitAll()
+		.antMatchers(HttpMethod.GET,"/usuario/find/{id}").permitAll()
+		.antMatchers(HttpMethod.DELETE,"/usuario/delete/{id}").permitAll()
+		.antMatchers(HttpMethod.POST,"/posto/save").permitAll()
+		.antMatchers(HttpMethod.GET,"/posto/all").permitAll()
+		.antMatchers(HttpMethod.GET,"/posto/find/{id}").permitAll()
+		.antMatchers(HttpMethod.DELETE,"/posto/delete/{id}").permitAll()
+		.antMatchers("/swagger-ui.html").permitAll()
+		.antMatchers("/swagger-resources/configuration/ui").permitAll()
+	
+		
+		
+	
 
+
+		
 		.anyRequest().authenticated()
 		.and().csrf().disable()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

@@ -27,14 +27,19 @@ public class GeraTokenService {
 	}
 
 	public boolean isTokenValido(String token) {
-		try {
-			Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token);
-			return true;
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			return false;
-		}
+		    if (token == null || token.trim().isEmpty()) {
+	        return false;
+	    }
+
+	    try {
+	        Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
+	        return true;
+	    } catch(Exception e) {
+	        e.printStackTrace();
+	        return false;
+	    }
 	}
+	
 
 	public Long getIdUsuario(String token) {
 		Claims claims = Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token).getBody();
