@@ -54,6 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers(HttpMethod.GET,"/posto/all").permitAll()
 		.antMatchers(HttpMethod.GET,"/posto/find/{id}").permitAll()
 		.antMatchers(HttpMethod.DELETE,"/posto/delete/{id}").permitAll()
+		.antMatchers("/**").permitAll()
 		.antMatchers("/swagger-ui.html").permitAll()
 		.antMatchers("/swagger-resources/configuration/ui").permitAll()
 	

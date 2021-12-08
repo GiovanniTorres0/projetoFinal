@@ -36,6 +36,14 @@ public class PostoForm {
 		this.cep = cep;
 		this.endereco = endereco;
 	}
+	
+
+	public PostoForm() {
+		super();
+	}
+
+
+
 
 	public String getEndereco() {
 		return endereco;

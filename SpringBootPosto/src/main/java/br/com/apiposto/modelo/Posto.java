@@ -13,7 +13,6 @@ public class Posto {
 	@Id
 	private Long id;
 	private String nome;
-	@DBRef
 	private Ubicacion ubicacion;
 
 	public Posto() {

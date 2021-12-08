@@ -2,60 +2,163 @@
 <html>
 
 <head>
-	<meta charset="UTF-8" />
+	<style>
+		/* Set the size of the div element that contains the map */
+		#map {
+			height: 400px;
+			/* The height is 400 pixels */
+			width: 600px;
+			/* The width is 600 pixels */
+		}
+
+		#map2 {
+			height: 400px;
+			/* The height is 400 pixels */
+			width: 600px;
+			/* The width is 600 pixels */
+		}
+	</style>
+
 	<title>PostoAPI</title>
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-	<link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css" media="screen,projection" />
 </head>
 
-<body class="grey lighten-3">
-	<h1 class="main-title center">Bem-vindo a localização de Postos</h1>
-
-	<div class="row center">
-		<a href="/usuario/cadastrar">
-			<div class="col s12 m4 l4  waves-effect waves-light ">
-				<div class="card-panel hoverable z-depth-1 center grey lighten-4">
-					<i class="large material-icons ">perm_identity </i>
-					<div class="truncate">Cadastrar Usuario</div>
+<body>
+	<div id="formularioGeolocalizacao">
+		<h3 class="main-title center">Visualizar Aluno</h3>
+		<form class="col s12" action="/index" method="get">
+			<div class="row">
+				<div class="input-field col s12">
+					<select name="alunoId" id="alunoId">
+						<option th:each="aluno : ${alunos}" th:value="${aluno.id}" th:text="${aluno.nome}">Nome do Aluno
+						</option>
+					</select> <label for="aluno">Alunos</label>
 				</div>
 			</div>
-		</a>
+			<div th:if="${alunosProximos} != null">
+				<div class="row">
+					<div id="map"></div>
+					<script>
+						// Initialize and add the map
+						let map;
+						function initMap() {
+							map = new google.maps.Map(document.getElementById('map'), {
+								zoom: 15,
+								center: { lat: -30.8963309, lng: -55.5363844 }
+							});
 
 
-		<div class="col s12 m4 l4 waves-effect waves-light">
-			<a href="/usuario/listar">
-				<div class="card-panel hoverable z-depth-1 center grey lighten-4">
-					<i class="large material-icons">search</i>
-					<div class="truncate">Pesquisar Usuario</div>
+
+							for (index = 0; index < alunos.length; ++index) {
+								var latitude = alunos[index].ubicacion.coordinates[0];
+								var longitude = alunos[index].ubicacion.coordinates[1];
+
+								var coordenadas = {
+									lat: latitude,
+									lng: longitude
+								};
+
+								console.log("coordenadas para puntas"+coordenadas.lat+","+coordenadas.lng);
+
+								var marker = new google.maps.Marker({
+									position: coordenadas,
+									label: alunos[index].nome
+
+								});
+								marker.setMap(map);
+
+							};
+
+							var listCorndeas = [alunos.length];
+							for (index = 1; index < alunos.length; ++index) {
+								var latitude = alunos[index].ubicacion.coordinates[0];
+								var longitude = alunos[index].ubicacion.coordinates[1];
+								listCorndeas[index-1] = latitude + "," + longitude;
+							};
+							console.log(alunos);
+
+
+							console.log(alunos[0].ubicacion.coordinates[0]);
+							var usuario = [0];
+							usuario[0] = alunos[0].ubicacion.coordinates[0] + "," + alunos[0].ubicacion.coordinates[1];
+
+							console.log(usuario);
+
+							// Add Distance Matrix here
+
+							const service = new google.maps.DistanceMatrixService(); // instantiate Distance Matrix service
+							const matrixOptions = {
+									origins:listCorndeas , // technician locations
+									destinations:usuario, // customer address
+									travelMode: 'DRIVING',
+									unitSystem: google.maps.UnitSystem.IMPERIAL
+								};
+							// Call Distance Matrix service
+							service.getDistanceMatrix(matrixOptions, callback);
+
+							// Callback function used to process Distance Matrix response
+							function callback(response, status) {
+								if (status !== "OK") {
+									alert("Error with distance matrix");
+									return;
+								}
+								console.log(response);
+								console.log(response.rows[0].elements);
+								console.log(response.rows[0].elements[0].duration.value);
+								console.log(response.rows[1].elements[0].duration.value);
+
+
+
+								let routes = response.rows;
+
+								console.log(routes);
+
+								for (let i = 0; i < routes.length; i++) {
+									console.log(routes[i].elements[0].duration.value + "test");
+								}
+
+
+								let leastseconds = 86400; // 24 hours
+								let drivetime = "";
+								let closest = "";
+
+								for (let i = 0; i < routes.length; i++) {
+									const routeseconds = routes[i].elements[0].duration.value;
+									console.log("AGARRANDO VALOR");
+									console.log(routeseconds + "ANTES DEL IF");
+									console.log(leastseconds + " ANTES DEL IF");
+
+									if (routeseconds > 0 && routeseconds < leastseconds) {
+										console.log(routeseconds);
+										console.log(leastseconds);
+										leastseconds = routeseconds; // this route is the shortest (so far)
+										console.log(leastseconds);
+										drivetime = routes[i].elements[0].duration.text; // hours and minutes
+										closest = response.originAddresses[i]; // city name from destinations
+									}
+								}
+								alert("O Posto mas Perto e: " + closest + " (" + drivetime + ")");
+							}
+						}
+
+					</script>
 				</div>
-			</a>
-		</div>
-
-		<div class="row center">
-			<a href="/posto/cadastrar">
-				<div class="col s12 m4 l4  waves-effect waves-light ">
-					<div class="card-panel hoverable z-depth-1 center grey lighten-4">
-						<i class="large material-icons ">perm_identity </i>
-						<div class="truncate">Cadastrar Postos</div>
-					</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<button class="btn waves-effect waves-light" type="submit">Pesquisar</button>
 				</div>
-			</a>
-		</div>
+			</div>
+		</form>
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+			var alunos =/*[[${alunosProximos}]]*/"parse";
+			/*]]>*/
 
-
-		<div class="row center">
-			<a href="/geolocalizacao/iniciarpesquisa">
-				<div class="col s12 m4 l4  waves-effect waves-light ">
-					<div class="card-panel hoverable z-depth-1 center grey lighten-4">
-						<i class="large material-icons ">my_location </i>
-						<div class="truncate">Pesquisar por Geolocalizacao</div>
-					</div>
-				</div>
-			</a>
-		</div>
-
-		<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-		<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+		</script>
+		<script async defer
+			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9rUZ_MtqyuD2s3sOFNBNlVJabNLGgMUA&callback=initMap">
+			</script>
+	</div>
 </body>
 
 </html>

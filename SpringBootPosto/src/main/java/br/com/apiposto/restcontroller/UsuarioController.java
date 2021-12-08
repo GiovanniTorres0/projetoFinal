@@ -1,4 +1,4 @@
-package br.com.apiposto.controller;
+package br.com.apiposto.restcontroller;
 
 import java.util.List;
 
