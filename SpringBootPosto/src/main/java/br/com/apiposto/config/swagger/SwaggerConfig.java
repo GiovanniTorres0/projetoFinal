@@ -29,12 +29,12 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
     }
     private ApiInfo metaData() {
         return new ApiInfoBuilder()
-                .title("Spring Boot REST API")
-                .description("\"Spring Boot REST API for Online Store\"")
+                .title("Spring Boot REST API Posto de Combustível")
+                .description("\"API de gelocalização de postos de combustível\"")
                 .version("1.0.0")
                 .license("Apache License Version 2.0")
-                .licenseUrl("https://www.apache.org/licenses/LICENSE-2.0\"")
-                .contact(new Contact("John Thompson", "http://springframework.guru/about/", "john@springfrmework.guru"))
+                .licenseUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley")
+                .contact(new Contact("ContatoTeste", "http://springframework.guru/about/", "teste@example.com"))
                 .build();
     }
     @Override
