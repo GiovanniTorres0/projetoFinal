@@ -17,15 +17,11 @@ import br.com.apiposto.repository.UsuarioRepository;
 
 public class AutenticacaoViaTokenFilter extends OncePerRequestFilter {
 
-	
 	private GeraTokenService tokenService;
-	
+
 	private UsuarioRepository usuarioRepository;
-	
-	
-	
-	
-	public AutenticacaoViaTokenFilter(GeraTokenService tokenService, UsuarioRepository usuarioRepository ) {
+
+	public AutenticacaoViaTokenFilter(GeraTokenService tokenService, UsuarioRepository usuarioRepository) {
 		this.tokenService = tokenService;
 		this.usuarioRepository = usuarioRepository;
 	}
@@ -35,27 +31,30 @@ public class AutenticacaoViaTokenFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 		String token = recuperarToken(request);
 
-		boolean valido = tokenService.isTokenValido(token);
+		boolean valido = false;
+	
+			 valido = tokenService.isTokenValido(token);
+	
 		
-		if(valido) {
+		if (valido) {
 			autenticarCliente(token);
 		}
-		
-		
-		
-		
+
 		filterChain.doFilter(request, response);
 	}
 
 	private void autenticarCliente(String token) {
-		Long idUsuario = tokenService.getIdUsuario(token); 
-		Optional<Usuario> usuario = usuarioRepository.findById(idUsuario);
-		if(usuario.isPresent()) {
-		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.get().getAuthorities());
-		SecurityContextHolder.getContext().setAuthentication(authentication);}
-		else {
-			System.out.println("Error de Autenticacion");
-		}
+		 
+			Long idUsuario = tokenService.getIdUsuario(token);
+			Optional<Usuario> usuario = usuarioRepository.findById(idUsuario);
+			if (usuario.isPresent()) {
+				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(usuario,
+						null, usuario.get().getAuthorities());
+				SecurityContextHolder.getContext().setAuthentication(authentication);
+			} else {
+				System.out.println("Error de Autenticacion");
+			}
+	
 	}
 
 	private String recuperarToken(HttpServletRequest request) {
@@ -64,9 +63,7 @@ public class AutenticacaoViaTokenFilter extends OncePerRequestFilter {
 			return null;
 
 		}
-		return token.substring(7 , token.length());
+		return token.substring(7, token.length());
 	}
-	
-	
 
 }

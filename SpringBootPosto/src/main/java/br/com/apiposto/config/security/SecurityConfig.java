@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import br.com.apiposto.repository.UsuarioRepository;
+import io.jsonwebtoken.ExpiredJwtException;
 
 @EnableWebSecurity
 @Configuration
@@ -37,7 +38,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		
 		auth.userDetailsService(autenticacaoService).passwordEncoder(new BCryptPasswordEncoder());
+		
 	}
 	
 	
@@ -47,14 +50,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 		.antMatchers(HttpMethod.POST,"/auth").permitAll()
 		.antMatchers(HttpMethod.GET,"/usuario/all").permitAll()
-		.antMatchers(HttpMethod.POST,"/usuario/save").permitAll()
 		.antMatchers(HttpMethod.GET,"/usuario/find/{id}").permitAll()
-		.antMatchers(HttpMethod.DELETE,"/usuario/delete/{id}").permitAll()
-		.antMatchers(HttpMethod.POST,"/posto/save").permitAll()
 		.antMatchers(HttpMethod.GET,"/posto/all").permitAll()
 		.antMatchers(HttpMethod.GET,"/posto/find/{id}").permitAll()
-		.antMatchers(HttpMethod.DELETE,"/posto/delete/{id}").permitAll()
-		.antMatchers("/**").permitAll()
+		.antMatchers(HttpMethod.GET,"/index").permitAll()
+		.antMatchers(HttpMethod.GET,"/").permitAll()
 		.antMatchers("/swagger-ui.html").permitAll()
 		.antMatchers("/swagger-resources/configuration/ui").permitAll()
 	
@@ -68,7 +68,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.and().csrf().disable()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, usuarioRepository), UsernamePasswordAuthenticationFilter.class);
-
+		
+		
 	}
 
 	@Override

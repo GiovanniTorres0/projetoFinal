@@ -13,16 +13,22 @@ public class Ubicacion {
 	private Long id;	
 	private String endereco;
 	private String cep;
+	private String cidade;
+	private String uF;
+	private String numero;
 	private List<Double> coordinates;
 	private String type = "Point";
 
 	public Ubicacion() {
 	}
 
-	public Ubicacion(String endereco, List<Double> coordinates, String cep) {
+	public Ubicacion(String endereco, List<Double> coordinates, String cep, String cidade , String uF, String numero) {
 		this.endereco = endereco;
 		this.coordinates = coordinates;
 		this.cep =cep;
+		this.cidade=cidade;
+		this.uF=uF;
+		this.numero=numero;
 	}
 	
 	
@@ -34,6 +40,31 @@ public class Ubicacion {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	
+	public String getNumero() {
+		return numero;
+	}
+
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+
+	public String getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+
+	public String getuF() {
+		return uF;
+	}
+
+	public void setuF(String uF) {
+		this.uF = uF;
 	}
 
 	public String getCep() {

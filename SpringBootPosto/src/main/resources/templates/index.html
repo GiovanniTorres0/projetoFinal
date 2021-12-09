@@ -24,14 +24,14 @@
 
 <body>
 	<div id="formularioGeolocalizacao">
-		<h3 class="main-title center">Visualizar Aluno</h3>
+		<h3 class="main-title center">Visualizar Posto</h3>
 		<form class="col s12" action="/index" method="get">
 			<div class="row">
 				<div class="input-field col s12">
 					<select name="alunoId" id="alunoId">
-						<option th:each="aluno : ${alunos}" th:value="${aluno.id}" th:text="${aluno.nome}">Nome do Aluno
+						<option th:each="aluno : ${alunos}" th:value="${aluno.id}" th:text="${aluno.nome}">Nome do Usuarios
 						</option>
-					</select> <label for="aluno">Alunos</label>
+					</select> <label for="aluno">usuario</label>
 				</div>
 			</div>
 			<div th:if="${alunosProximos} != null">
