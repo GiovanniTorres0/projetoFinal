@@ -37,14 +37,15 @@ public class GeolocalizacionController {
 	@GetMapping("/")
 	public String inicializarPesquisa(Model model) {
 		List<Usuario> usuarios = usuarioServiceApi.getAll();
-
-		model.addAttribute("alunos", usuarios);
+		
+		
+		model.addAttribute("usuarios", usuarios);
 
 		return "index";
 	}
 
 	@GetMapping("/index")
-	public String pesquisar(@RequestParam("alunoId") String usuarioId, Model model) {
+	public String pesquisar(@RequestParam("usuarioId") String usuarioId, Model model) {
 
 		long id = Long.parseLong(usuarioId);
 		System.out.println("ID de busqueda" + id);
@@ -65,7 +66,7 @@ public class GeolocalizacionController {
 			List<Posto> postosProximos = new ArrayList<Posto>();
 			postosProximos.add(postoUsuario);
 			postosProximos.addAll(totalDePostos);
-			model.addAttribute("alunosProximos", postosProximos);
+			model.addAttribute("usuariosProximos", postosProximos);
 
 
 		}

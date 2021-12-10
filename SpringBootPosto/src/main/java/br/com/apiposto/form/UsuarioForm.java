@@ -83,14 +83,6 @@ public class UsuarioForm {
 		this.idUbicacion = idUbicacion;
 	}
 
-	public Long getIdUbicacion() {
-		return idUbicacion;
-	}
-
-	public void setIdUbicacion(Long idUbicacion) {
-		this.idUbicacion = idUbicacion;
-	}
-
 	public String getLogradoro() {
 		return logradoro;
 	}
@@ -158,17 +150,23 @@ public class UsuarioForm {
 	public Usuario converter(UsuarioForm form, GeolocalizacaoService geolocalizacaoService,
 			UsuarioRepository usuarioRepository) {
 
-		String[] Ufs = { "AC","AL","AM","AP","BA","CE","DF","ES","GO","MA","MT","MS","MG","PA","PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO"};
-
+		// Validacao de UF
+		String[] Ufs = { "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR",
+				"PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" };
 		List<String> UFsList = Arrays.asList(Ufs);
 		if (!UFsList.contains(form.getuF())) {
 			System.out.println("UF IVALIDO");
 			return null;
 		}
 
+		// Cracao de Usuario com id Radom
 		Usuario usuario = new Usuario();
-		Long id = idR.nextLong();
-		System.out.println("ID " + id + " REGISTRADOS");
+		Long id = -1l;
+		while (id <= 0) {
+			id = idR.nextLong();
+		}
+		System.out.println("ID: " + id + "PRA REGISTRAR");
+
 		usuario.setId(id);
 		usuario.setNome(form.getNome());
 		Ubicacion ubicacion = new Ubicacion();
@@ -181,14 +179,12 @@ public class UsuarioForm {
 			return null;
 		}
 
+		//Validacao via CEP
 		String DatosEndereco = null;
 		ViaCEPClient cliente = new ViaCEPClient();
-
 		try {
 			ViaCEPEndereco enderecoCep = cliente.getEndereco(form.getCep());
-
 			System.out.println(enderecoCep.getLocalidade().contains(form.getLogradoro()));
-
 			if (form.getCidade().equalsIgnoreCase(enderecoCep.getLocalidade())
 					&& form.getuF().equalsIgnoreCase(enderecoCep.getUf())) {
 
@@ -196,7 +192,6 @@ public class UsuarioForm {
 						+ enderecoCep.getLocalidade();
 				System.out.println(DatosEndereco);
 			}
-
 			else {
 				System.out.println("DADOS DE INDERESO INVALIDOS");
 				System.out.println(form.getCidade() + " " + enderecoCep.getLocalidade() + " " + form.getuF() + " "
@@ -219,6 +214,7 @@ public class UsuarioForm {
 
 		}
 
+		//Encode de Senha
 		String encode = new BCryptPasswordEncoder().encode(form.getSenha());
 		usuario.setSenha(encode);
 
@@ -228,29 +224,27 @@ public class UsuarioForm {
 		System.out.println("Convirtiendo");
 
 		String optenerCordenadas = optenerCordenadasUsuario(usuario, geolocalizacaoService, DatosEndereco);
-
 		if (optenerCordenadas == null) {
 			return usuario;
 		}
 		return null;
 	}
 
+	// Validacao de EMAIL
 	private boolean isNotPresentEmail(String email, UsuarioRepository usuarioRepository) {
 		Optional<Usuario> ValidacionDeEmail = usuarioRepository.findByEmail(email);
 		if (ValidacionDeEmail.isPresent()) {
 			return false;
-
 		}
 		return true;
-
 	}
 
+	// Coordenadas
 	private String optenerCordenadasUsuario(Usuario usuario, GeolocalizacaoService geolocalizacaoService,
 			String DatosEndereco) {
 		try {
 			List<Double> latElong = geolocalizacaoService.obterLatELong(usuario.getUbicacion(), DatosEndereco);
 			usuario.getUbicacion().setCoordinates(latElong);
-
 			System.out.println(usuario.getUbicacion().getCoordinates());
 			return null;
 

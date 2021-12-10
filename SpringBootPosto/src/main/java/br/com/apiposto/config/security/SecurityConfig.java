@@ -48,15 +48,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 		.antMatchers(HttpMethod.POST,"/auth").permitAll()
+		.antMatchers(HttpMethod.POST,"/usuario/save").permitAll()
+		
 		.antMatchers(HttpMethod.GET,"/usuario/all").permitAll()
 		.antMatchers(HttpMethod.GET,"/usuario/find/{id}").permitAll()
 		.antMatchers(HttpMethod.GET,"/posto/all").permitAll()
 		.antMatchers(HttpMethod.GET,"/posto/find/{id}").permitAll()
 		.antMatchers(HttpMethod.GET,"/index").permitAll()
 		.antMatchers(HttpMethod.GET,"/").permitAll()
+		
 		.antMatchers("/swagger-ui.html").permitAll()
 		.antMatchers("/swagger-resources/configuration/ui").permitAll()
-	
+		.antMatchers("/swagger-ui.html/**").permitAll()
+		.antMatchers("/v2/api-docs/**").permitAll()
+		.antMatchers("/swagger-resources/configuration/ui").permitAll()
+		.antMatchers("/webjars/springfox-swagger-ui/**").permitAll()
+		.antMatchers("/swagger-ui.html/swagger-resources/configuration/ui/**").permitAll()
+		.antMatchers("/swagger-resources/configuration/security/**").permitAll()
+		.antMatchers("/swagger-resources/**").permitAll()
 		
 		
 	

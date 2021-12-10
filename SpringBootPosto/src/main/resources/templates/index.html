@@ -28,13 +28,13 @@
 		<form class="col s12" action="/index" method="get">
 			<div class="row">
 				<div class="input-field col s12">
-					<select name="alunoId" id="alunoId">
-						<option th:each="aluno : ${alunos}" th:value="${aluno.id}" th:text="${aluno.nome}">Nome do Usuarios
+					<select name="usuarioId" id="usuarioId">
+						<option th:each="usuario : ${usuarios}" th:value="${usuario.id}" th:text="${usuario.nome}">Nome do Usuarios
 						</option>
-					</select> <label for="aluno">usuario</label>
+					</select> <label for="usuario">usuario</label>
 				</div>
 			</div>
-			<div th:if="${alunosProximos} != null">
+			<div th:if="${usuariosProximos} != null">
 				<div class="row">
 					<div id="map"></div>
 					<script>
@@ -48,9 +48,9 @@
 
 
 
-							for (index = 0; index < alunos.length; ++index) {
-								var latitude = alunos[index].ubicacion.coordinates[0];
-								var longitude = alunos[index].ubicacion.coordinates[1];
+							for (index = 0; index < usuarios.length; ++index) {
+								var latitude = usuarios[index].ubicacion.coordinates[0];
+								var longitude = usuarios[index].ubicacion.coordinates[1];
 
 								var coordenadas = {
 									lat: latitude,
@@ -61,25 +61,25 @@
 
 								var marker = new google.maps.Marker({
 									position: coordenadas,
-									label: alunos[index].nome
+									label: usuarios[index].nome
 
 								});
 								marker.setMap(map);
 
 							};
 
-							var listCorndeas = [alunos.length];
-							for (index = 1; index < alunos.length; ++index) {
-								var latitude = alunos[index].ubicacion.coordinates[0];
-								var longitude = alunos[index].ubicacion.coordinates[1];
+							var listCorndeas = [usuarios.length];
+							for (index = 1; index < usuarios.length; ++index) {
+								var latitude = usuarios[index].ubicacion.coordinates[0];
+								var longitude = usuarios[index].ubicacion.coordinates[1];
 								listCorndeas[index-1] = latitude + "," + longitude;
 							};
-							console.log(alunos);
+							console.log(usuarios);
 
 
-							console.log(alunos[0].ubicacion.coordinates[0]);
+							console.log(usuarios[0].ubicacion.coordinates[0]);
 							var usuario = [0];
-							usuario[0] = alunos[0].ubicacion.coordinates[0] + "," + alunos[0].ubicacion.coordinates[1];
+							usuario[0] = usuarios[0].ubicacion.coordinates[0] + "," + usuarios[0].ubicacion.coordinates[1];
 
 							console.log(usuario);
 
@@ -151,7 +151,7 @@
 		</form>
 		<script th:inline="javascript">
 			/*<![CDATA[*/
-			var alunos =/*[[${alunosProximos}]]*/"parse";
+			var usuarios =/*[[${usuariosProximos}]]*/"parse";
 			/*]]>*/
 
 		</script>
