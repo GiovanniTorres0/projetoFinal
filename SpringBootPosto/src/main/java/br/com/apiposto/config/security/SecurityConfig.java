@@ -15,7 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import br.com.apiposto.repository.UsuarioRepository;
-import io.jsonwebtoken.ExpiredJwtException;
 
 @EnableWebSecurity
 @Configuration
